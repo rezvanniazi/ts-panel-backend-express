@@ -1,11 +1,11 @@
 const express = require("express")
 const bodyParser = require("body-parser")
 const cors = require("cors")
-const { swaggerUi, specs } = require("./addons/swagger")
+// const { swaggerUi, specs } = require("./addons/swagger")
 const { tokenAuth } = require("./middleware/auth")
 const { canUseAudioBot, canUseServers, canUseManagerBots } = require("./middleware/havePermission")
 const { rateLimiters } = require("./middleware/rateLimiter")
-const path = require("path")
+// const path = require("path")
 
 // Initialize console capture early
 require("./utils/consoleCapture")
@@ -54,6 +54,6 @@ app.use("/api/manager-bot", rateLimiters.authenticated, canUseManagerBots, manag
 app.use("/api/settings", rateLimiters.authenticated, settingsRouter)
 app.use("/api/logs", rateLimiters.authenticated, logsRouter)
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs))
+// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs))
 
 module.exports = app
