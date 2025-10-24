@@ -327,8 +327,14 @@ class TeamspeakService {
         const usedPorts = await UsedPorts.findAll({ raw: true })
         return usedPorts.map((port) => port.port)
     }
-    async getServerPackageList() {
-        const serverPackageList = await ServerPackages.findAll({ raw: true })
+    async getServerPackageList(user) {
+        let serverPackageList
+
+        if (user.scope == "admin") {
+            serverPackageList = await ServerPackages.findAll({ raw: true })
+        } else {
+            serverPackageList = await ServerPackages.findAll({ where: { package_for_admin: false }, raw: true })
+        }
         return serverPackageList
     }
     /**

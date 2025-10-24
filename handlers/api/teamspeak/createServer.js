@@ -83,7 +83,7 @@ const createServer = async (req, res) => {
 
     const user = await Users.findByPk(id)
     const package = await ServerPackages.findOne({ where: { package_name: packageName } })
-    if (!package) {
+    if (!package || (package && package.package_for_admin && user.scope == "reseller")) {
         return res.status(apiCodes.PACKAGE_NOT_FOUND).json(responses.TEAMSPEAK.PACKAGE_NOT_FOUND)
     }
 
