@@ -1,8 +1,6 @@
 const https = require("https")
 const http = require("http")
 const { Server } = require("socket.io")
-const { swaggerUi, specs } = require("./addons/swagger")
-const { instrument } = require("@socket.io/admin-ui")
 
 const app = require("./app")
 const config = require("./config")
@@ -15,7 +13,6 @@ const AudiobotController = require("./handlers/socket/audiobot/AudiobotControlle
 const UserController = require("./handlers/socket/user/UserController")
 const ManagerbotController = require("./handlers/socket/managerbot/ManagerbotController")
 const JobManager = require("./jobs")
-const { default: axios } = require("axios")
 const ManagerBotPanels = require("./models/ManagerBotPanels")
 const { ManagerBotPanel } = require("./lib/managerBot/ManagerBotPanel")
 
