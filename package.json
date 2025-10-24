@@ -5,6 +5,12 @@
     "bin": {
         "ts-panel-backend-express": "dist/index.js"
     },
+    "pkg": {
+        "targets": [
+            "node18-linux-x64"
+        ],
+        "output": "dist/"
+    },
     "scripts": {
         "postinstall": "patch-package",
         "test": "echo \"Error: no test specified\" && exit 1",
