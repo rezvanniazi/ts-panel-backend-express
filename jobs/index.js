@@ -10,7 +10,7 @@ class JobManager {
         this.panelSyncJobs = new PanelSyncJobs()
         this.teamspeakJobs = new TeamspeakJobs()
         this.serverUsageJob = new ServerUsageJob(io)
-        // this.licenseCheckJobs = new LicenseCheckJobs()
+        this.licenseCheckJobs = new LicenseCheckJobs()
     }
 
     startAlljobs() {
@@ -18,7 +18,7 @@ class JobManager {
         this.panelSyncJobs.startPanelSyncCheck()
         this.teamspeakJobs.startTeamspeakJobsCheck()
         this.serverUsageJob.startServerUsageCheck()
-        // this.licenseCheckJobs.startLicenseCheck()
+        this.licenseCheckJobs.startLicenseCheck()
     }
 }
 
