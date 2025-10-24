@@ -44,7 +44,7 @@ class LicenseCheckJobs {
             let config = {
                 method: "post",
                 maxBodyLength: Infinity,
-                url: `http://localhost:45200/check-license`,
+                url: `https://licenses.nedxco.ir:45200/check-license`,
                 data: { token: TOKEN },
             }
 
