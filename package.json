@@ -6,6 +6,10 @@
         "ts-panel-backend-express": "dist/index.js"
     },
     "pkg": {
+        "assets": [
+            "addons/swagger.yaml",
+            "sync.js"
+        ],
         "targets": [
             "node18-linux-x64"
         ],
