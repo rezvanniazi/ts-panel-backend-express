@@ -1,0 +1,41 @@
+name: Release MTXPanel (Linux x64)
+
+on:
+    push:
+        tags:
+            - "v*" # Trigger on tags like v1.0.0
+
+jobs:
+    build-and-release:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20.18.3"
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Build for production
+              run: npm run production # Assumes this generates files in `dist/`
+
+            - name: Compress dist/ into mtxpanel-linux-x64.tar.gz
+              run: |
+                  tar -czvf mtxpanel-linux-x64.tar.gz -C dist/ ts-panel config.yml lib/ mtxpanel.service
+
+            - name: Create GitHub Release
+              uses: softprops/action-gh-release@v1
+              with:
+                  name: "MTXPanel Linux x64 - ${{ github.ref_name }}"
+                  tag_name: ${{ github.ref_name }}
+                  body: "Production build for Linux x64. Version: ${{ github.ref_name }}"
+                  files: |
+                      mtxpanel-linux-x64.tar.gz
+                  draft: false
+                  prerelease: false
+              env:
+                  GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }} # Auto-injected by GitHub

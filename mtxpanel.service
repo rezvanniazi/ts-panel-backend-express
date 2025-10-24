@@ -1,0 +1,15 @@
+[Unit]
+Description=MTXPanel Service
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+Environment="PATH_TO_PARENT_TS=/home/mtxpanel/server"
+WorkingDirectory=/usr/local/mtxpanel-linux-x64/
+ExecStart=/usr/local/mtxpanel-linux-x64/ts-panel
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
