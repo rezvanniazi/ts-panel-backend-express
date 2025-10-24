@@ -25,7 +25,7 @@ jobs:
 
             - name: Compress dist/ into mtxpanel-linux-x64.tar.gz
               run: |
-                  tar -czvf mtxpanel-linux-x64.tar.gz -C dist/ ts-panel config.yml lib/ mtxpanel.service
+                  tar -czvf mtxpanel-linux-x64.tar.gz -C dist/ ts-panel .env.example lib/ mtxpanel.service
 
             - name: Create GitHub Release
               uses: softprops/action-gh-release@v1

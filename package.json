@@ -14,7 +14,7 @@
     "scripts": {
         "postinstall": "patch-package",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "production": "ncc build server.js && pkg . && mv ./ts-panel-backend-express dist/ts-panel && cp mtxpanel.service dist/"
+        "production": "ncc build server.js && pkg . && mv ./ts-panel-backend-express dist/ts-panel && cp mtxpanel.service dist/ && cp .env.example dist/"
     },
     "keywords": [],
     "author": "",

@@ -42,7 +42,6 @@ class SocketServer {
             },
         })
         this.initializeMiddlewares()
-        this.initializeAdminUI()
         this.initializeControllers()
         this.initializeManagerBotPanels()
         this.initializeCronjobs()
@@ -67,16 +66,6 @@ class SocketServer {
             console.log(`Socket connection attempt from ${socket.handshake.address}`)
             next()
         })
-    }
-
-    initializeAdminUI() {
-        if (config.socketAdmin.enabled) {
-            instrument(this.io, {
-                namespaceName: "/socketadmin",
-                auth: false,
-                mode: process.env.NODE_ENV || "development",
-            })
-        }
     }
 
     initializeControllers() {

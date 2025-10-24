@@ -53,7 +53,6 @@ app.use("/api/audio-bot", rateLimiters.authenticated, canUseAudioBot, audioBotRo
 app.use("/api/manager-bot", rateLimiters.authenticated, canUseManagerBots, managerBotRouter)
 app.use("/api/settings", rateLimiters.authenticated, settingsRouter)
 app.use("/api/logs", rateLimiters.authenticated, logsRouter)
-app.use("/socketadmin", express.static(path.join(__dirname, "node_modules", "@socket.io/admin-ui/ui/dist")))
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs))
 
