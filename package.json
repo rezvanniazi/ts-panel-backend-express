@@ -2,6 +2,9 @@
     "name": "ts-panel-backend-express",
     "version": "1.0.0",
     "main": "server.js",
+    "bin": {
+        "ts-panel-backend-express": "dist/index.js"
+    },
     "scripts": {
         "postinstall": "patch-package",
         "test": "echo \"Error: no test specified\" && exit 1",
