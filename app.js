@@ -1,11 +1,9 @@
 const express = require("express")
 const bodyParser = require("body-parser")
 const cors = require("cors")
-// const { swaggerUi, specs } = require("./addons/swagger")
 const { tokenAuth } = require("./middleware/auth")
 const { canUseAudioBot, canUseServers, canUseManagerBots } = require("./middleware/havePermission")
 const { rateLimiters } = require("./middleware/rateLimiter")
-// const path = require("path")
 
 // Initialize console capture early
 require("./utils/consoleCapture")
