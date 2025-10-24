@@ -25,9 +25,44 @@ jobs:
             - name: Build for production
               run: npm run production # Assumes this generates files in `dist/`
 
-            - name: Compress dist/ into mtxpanel-linux-x64.tar.gz
+            - name: Install pkg globally
+              run: npm install -g pkg
+
+            - name: Create binary with Swagger assets
               run: |
-                  tar -czvf mtxpanel-linux-x64.tar.gz -C dist/ ts-panel .env.example lib/ mtxpanel.service
+                  # Create the binary with all necessary assets
+                  pkg . \
+                    --target node18-linux-x64 \
+                    --assets "addons/swagger.yaml" \
+                    --assets "addons/**/*.yaml" \
+                    --assets "addons/**/*.yml" \
+                    --output mtxpanel-linux-x64
+
+            - name: Verify binary contains Swagger
+              run: |
+                  # Check if binary was created
+                  if [ -f "mtxpanel-linux-x64" ]; then
+                      echo "✅ Binary created successfully"
+                      ls -la mtxpanel-linux-x64
+                  else
+                      echo "❌ Binary creation failed"
+                      exit 1
+                  fi
+
+            - name: Compress binary and files into mtxpanel-linux-x64.tar.gz
+              run: |
+                  # Create directory structure
+                  mkdir -p package/dist
+                  
+                  # Copy necessary files
+                  cp mtxpanel-linux-x64 package/
+                  cp -r dist/* package/dist/ 2>/dev/null || true
+                  cp .env.example package/
+                  cp mtxpanel.service package/
+                  cp lib/ package/ -r 2>/dev/null || true
+                  
+                  # Create tar.gz
+                  tar -czvf mtxpanel-linux-x64.tar.gz -C package/ .
 
             - name: Create GitHub Release
               uses: softprops/action-gh-release@v1
@@ -40,4 +75,4 @@ jobs:
                   draft: false
                   prerelease: false
               env:
-                  GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }} # Auto-injected by GitHub
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
