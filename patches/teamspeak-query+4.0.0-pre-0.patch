@@ -1,0 +1,29 @@
+diff --git a/node_modules/teamspeak-query/lib/raw.js b/node_modules/teamspeak-query/lib/raw.js
+index e8ec08d..d68b43a 100644
+--- a/node_modules/teamspeak-query/lib/raw.js
++++ b/node_modules/teamspeak-query/lib/raw.js
+@@ -17,9 +17,22 @@ class RawTeamspeakQuery extends Base {
+     this.sock = sock;
+     this.host = connectOptions.host;
+     this.port = connectOptions.port;
++    this.connectOptions = connectOptions
++    
++  }
++  connectSocket() {
++    return new Promise((resolve, reject) => {
++      const sock = this.sock
++
++      sock.on('connect', () => {
++        super.streamSetup(sock, sock)
++        resolve()
++      });
++      sock.on("error", (err) => reject(err))
++      
++      sock.connect(this.connectOptions);
++    })
+ 
+-    sock.on('connect', () => super.streamSetup(sock, sock));
+-    sock.connect(connectOptions);
+   }
+ 
+   disconnect() {

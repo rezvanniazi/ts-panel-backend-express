@@ -1,0 +1,675 @@
+module.exports = {
+    COMMON: {
+        ACCESS_DENIED: {
+            code: "ACCESS_DENIED",
+            success: false,
+            en: "Access denied",
+            fa: "عدم دسترسی",
+        },
+        INVALID_TOKEN: {
+            code: "INVALID_TOKEN",
+            success: false,
+            en: "Invalid token or method",
+            fa: "توکن معتبر نمیباشد",
+        },
+        INTERNAL_SERVER_ERROR: {
+            code: "INTERNAL_SERVER_ERROR",
+            success: false,
+            en: "Internal server error",
+            fa: "مشکل در سرور بوجود امده است",
+        },
+        RATE_LIMIT_EXCEEDED: {
+            code: "RATE_LIMIT_EXCEEDED",
+            success: false,
+            en: "Too many requests, please try again later",
+            fa: "درخواست بیش از حد مجاز، لطفاً بعداً تلاش کنید",
+        },
+        SOCKET_COOLDOWN: {
+            code: "SOCKET_COOLDOWN",
+            success: false,
+            en: "Connection rejected due to cooldown period",
+            fa: "اتصال به دلیل دوره خنک سازی رد شد",
+        },
+        SUCCESS: {
+            code: "SUCCESS",
+            success: true,
+            en: "Success",
+            fa: "موفقیت آمیز",
+        },
+    },
+
+    TEAMSPEAK: {
+        NOT_FOUND: {
+            code: "NOT_FOUND",
+            success: false,
+            en: "Server not found",
+            fa: "سرور یافت نشد",
+        },
+        NOT_ACTIVE: {
+            code: "NOT_ACTIVE",
+            success: false,
+            en: "Server is suspended",
+            fa: "سرور تیم اسپیک غیرفعال میباشد",
+        },
+        EXPIRED: {
+            code: "EXPIRED",
+            success: false,
+            en: "Server is expired",
+            fa: "تمدید سرور به اتمام رسیده است",
+        },
+        ACTIVATED: {
+            code: "ACTIVATED",
+            success: true,
+            en: "Activated successfully",
+            fa: "با موفقیت فعال شد",
+        },
+        PORT_NOT_VALID: {
+            code: "PORT_NOT_VALID",
+            success: false,
+            en: "Port in use",
+            fa: "پورت درخواست شده معتبر نمیباشد(در دسترس نمیباشد)",
+        },
+        PORT_COLLISION: {
+            code: "PORT_COLLISION",
+            success: false,
+            en: "Port collision",
+            fa: "خطای پورت",
+        },
+        PACKAGE_NOT_FOUND: {
+            code: "PACKAGE_NOT_FOUND",
+            success: false,
+            en: "Package not found",
+            fa: "پکیج پیدا نشد",
+        },
+        COMPANY_NOT_FOUND: {
+            code: "COMPANY_NOT_FOUND",
+            success: false,
+            en: "Company not found",
+            fa: "کمپانی پیدا نشد",
+        },
+        EXTEND_UNLIMITED: {
+            code: "EXTEND_UNLIMITED",
+            success: false,
+            en: "Package is unlimited",
+            fa: "نمیتوان پکیج دائمی را تمدید کرد",
+        },
+
+        CREATED: {
+            code: "CREATED",
+            success: true,
+            en: "Server created succesfully",
+            fa: "سرور با موفقیت ساخته شد",
+        },
+        DELETED: {
+            code: "DELETED",
+            success: true,
+            en: "Server deleted successfully",
+            fa: "سرور با موفقیت حذف شد",
+        },
+        EXTENDED: {
+            code: "EXTENDED",
+            success: true,
+            en: "Server extended successfully",
+            fa: "سرور با موفقیت تمدید شد",
+        },
+
+        START: {
+            SUCCESS: {
+                code: "SUCCESS",
+                success: true,
+                en: "Server started successfully",
+                fa: "سرور با موفقیت روشن شد",
+            },
+            ALREADY_RUNNING: {
+                code: "ALREADY_RUNNING",
+                success: false,
+                en: "Server is already running",
+                fa: "سرور روشن میباشد",
+            },
+            UNKNOWN: {
+                code: "UNKNOWN",
+                success: false,
+                en: "Server start completed with unexpected output",
+                fa: "سرور با نتیجه نامعلوم روشن شده است",
+            },
+        },
+        RESTART: {
+            SUCCESS: {
+                code: "SUCCESS",
+                success: true,
+                en: "Server restarted successfully",
+                fa: "سرور با موفقیت ریستارت شد",
+            },
+
+            UNKNOWN: {
+                code: "UNKNOWN",
+                success: false,
+                en: "Server restart completed with unexpected output",
+                fa: "سرور با نتیجه نامعلوم ریستارت شده است",
+            },
+        },
+        STOP: {
+            SUCCESS: {
+                code: "SUCCESS",
+                success: true,
+                en: "Server stopped successfully",
+                fa: "سرور با موفقیت خاموش شد",
+            },
+            NOT_RUNNING: {
+                code: "NOT_RUNNING",
+                success: false,
+                en: "Server is not running",
+                fa: "سرور خاموش میباشد",
+            },
+            UNKNOWN: {
+                code: "UNKNOWN",
+                success: false,
+                en: "Server stop completed with unexpected output",
+                fa: "سرور با نتیجه نامعلوم خاموش شده است",
+            },
+        },
+        SNAPSHOT: {
+            FIVE_SNAPSHOT: {
+                code: "MORE_THAN_5_SNAPSHOTS",
+                success: false,
+                en: "You can't create more than 5 snapshots",
+                fa: "شما نمیتوانید بیشتر از ۵ بکاپ بگیرید",
+            },
+            CREATED: {
+                code: "CREATED",
+                success: true,
+                en: "Snapshot created successfully",
+                fa: "بکاپ با موفقیت گرفته شد",
+            },
+            DEPLOYED: {
+                code: "DEPLOYED",
+                success: true,
+                en: "Snapshot deployed successfully",
+                fa: "بکاپ با موفقیت روی سرور اعمال شد",
+            },
+            DELETED: {
+                code: "DELETED",
+                success: true,
+                en: "Snapshot deleted successfully",
+                fa: "بکاپ با موفقیت حذف شد",
+            },
+        },
+        SUSPENDED: {
+            code: "SUSPENDED",
+            success: true,
+            en: "Server suspended successfully",
+            fa: "سرور با موفقیت غیرفعال شد",
+        },
+    },
+    AUDIO_BOT: {
+        NOT_FOUND: {
+            code: "NOT_FOUND",
+            success: false,
+            en: "Bot not found",
+            fa: "بات یافت نشد",
+        },
+        ACTIVATED: {
+            code: "ACTIVATED",
+            success: true,
+            en: "Activated successfully",
+            fa: "با موفقیت فعال شد",
+        },
+        SUSPENDED: {
+            code: "SUSPENDED",
+            success: true,
+            en: "Suspended succesfully",
+            fa: "با موفقیت غیرفعال شد",
+        },
+        PACKAGE_NOT_FOUND: {
+            code: "PACKAGE_NOT_FOUND",
+            success: false,
+            en: "Package not found",
+            fa: "پکیج مورد نظر یافت نشد",
+        },
+        CONNECT: {
+            SUCCESS: {
+                code: "SUCCESS",
+                success: true,
+                en: "Connected successfully",
+                fa: "با موفقیت کانکت شد",
+            },
+        },
+        RECONNECTED: {
+            code: "RECONNECTED",
+            success: true,
+            en: "Reconnected successfully",
+            fa: "با موفقیت ریکانکت شد",
+        },
+        CREATED: {
+            code: "CREATED",
+            success: true,
+            en: "Bot created successfully",
+            fa: "ربات موزیک با موفقیت ساخته شد",
+        },
+        EDITED: {
+            code: "EDITED",
+            success: true,
+            en: "Bot edited successfully",
+            fa: "ربات موزیک با موفقیت ویرایش شد",
+        },
+        DELETED: {
+            code: "DELETED",
+            success: true,
+            en: "Bot deleted successfully",
+            fa: "ربات موزیک با موفقیت حذف شد",
+        },
+        DISCONNECTED: {
+            code: "DISCONNECTED",
+            success: true,
+            en: "Bot disconnected successfully",
+            fa: "بات با موفقیت خاموش شد",
+        },
+        EXTEND_UNLIMITED: {
+            code: "EXTEND_UNLIMITED",
+            success: false,
+            en: "Package is unlimited",
+            fa: "نمیتوان پکیج دائمی را تمدید کرد",
+        },
+        EXTENDED: {
+            code: "EXTENDED",
+            success: true,
+            en: "Bot extended successfully",
+            fa: "ربات موزیک با موفقیت تمدید شد",
+        },
+        RADIO_CHANGED: {
+            code: "RADIO_CHANGED",
+            success: true,
+            en: "Radio changed successfully",
+            fa: "رادیو با موفقیت تغییر یافت",
+        },
+    },
+    PANEL: {
+        IS_OFFLINE: {
+            code: "IS_OFFLINE",
+            success: false,
+            en: "Panel is not running",
+            fa: "پنل بات مورد نظر در دسترس نمیباشد",
+        },
+        NO_AVAILABLE_PANEL: {
+            code: "NO_AVAILABLE_PANEL",
+            success: false,
+            en: "There is no available panel",
+            fa: "پنل در دسترس موجود نمیباشد",
+        },
+        REFRESHED: {
+            code: "REFRESHED",
+            success: true,
+            en: "Panels refreshed successfully",
+            fa: "پنل ها با موفقیت رفرش شدند",
+        },
+    },
+
+    USER: {
+        ACTIVATED: {
+            code: "ACTIVATED",
+            success: true,
+            en: "User Activated",
+            fa: "کاربر با موفقیت فعال شد",
+        },
+        CREATED: {
+            code: "CREATED",
+            success: true,
+            en: "User created",
+            fa: "کاربر با موفقیت ساخته شد",
+        },
+        EDITED: {
+            code: "EDITED",
+            success: true,
+            en: "User edited",
+            fa: "کاربر با موفقیت ویرایش شد",
+        },
+        DELETED: {
+            code: "DELETED",
+            success: true,
+            en: "User deleted",
+            fa: "کاربر با موفقیت حذف شد",
+        },
+        NOT_FOUND: {
+            code: "NOT_FOUND",
+            success: false,
+            en: "User not found",
+            fa: "کاربر با مشخصات وارد شده یافت نشد",
+        },
+        NOT_VALID_PASSWORD: {
+            code: "NOT_VALID_PASSWORD",
+            success: false,
+            en: "Incorrect current password",
+            fa: "پسورد فعلی اشتباه میباشد",
+        },
+        NOT_IDENTICAL_PASSWORD: {
+            code: "NOT_IDENTICAL_PASSWORD",
+            success: false,
+            en: "Not identical password",
+            fa: "پسورد ها یکسان نمیباشند",
+        },
+        PASSWORD_CHANGED: {
+            code: "PASSWORD_CHANGED",
+            success: true,
+            en: "Password changed",
+            fa: "پسورد با موفقیت تغییر یافت",
+        },
+        INSUFFICIENT_BALANCE: {
+            code: "INSUFFICIENT_BALANCE",
+            success: false,
+            en: "Insufficient balance",
+            fa: "موجودی کافی نیست",
+        },
+        INVALID_AUTH: {
+            code: "INVALID_AUTH",
+            success: false,
+            en: "Username or password is wrong",
+            fa: "نام کاربری یا رمز عبور اشتباه میباشد",
+        },
+        SUSPENDED: {
+            code: "SUSPENDED",
+            success: true,
+            en: "User suspended",
+            fa: "کاربر با موفقیت غیرفعال شد",
+        },
+    },
+    SETTINGS: {
+        COMPANY: {
+            INVALID_TOKEN: {
+                code: "INVALID_TOKEN",
+                success: false,
+                en: "Invalid cloudflare token",
+                fa: "توکن کلودفلر معتبر نمیباشد",
+            },
+            DOMAIN_NOT_FOUND: {
+                code: "DOMAIN_NOT_FOUND",
+                success: false,
+                en: "Domain not found with this token",
+                fa: "دامنه با توکن ارائه شد یافت نشد",
+            },
+            CREATE_SUCCESS: {
+                code: "CREATE_SUCCESS",
+                success: true,
+                en: "Company created successfully",
+                fa: "کمپانی با موفقیت ساخته شد",
+            },
+            EDIT_SUCCESS: {
+                code: "EDIT_SUCCESS",
+                success: true,
+                en: "Company edited successfully",
+                fa: "کمپانی با موفقیت ویرایش شد",
+            },
+            DELETE_SUCCESS: {
+                code: "DELETE_SUCCESS",
+                success: true,
+                en: "Company deleted successfully",
+                fa: "کمپانی با موفقیت حذف شد",
+            },
+            HAS_MEMBER: {
+                code: "HAS_MEMBER",
+                success: false,
+                en: "Company shouldn't contain any users",
+                fa: "نباید کاربری با این کمپانی وجود داشته باشد",
+            },
+            COMPANY_NOT_FOUND: {
+                code: "COMPANY_NOT_FOUND",
+                success: false,
+                en: "Company with requested id not found",
+                fa: "کمپانی با ایدی ارائه شده یافت نشد",
+            },
+        },
+        MANAGER_PANEL: {
+            CREATE_SUCCESS: {
+                code: "CREATE_SUCCESS",
+                success: true,
+                en: "Manager panel added success",
+                fa: "پنل منیجر بات با موفقیت اضافه شد",
+            },
+            EDIT_SUCCESS: {
+                code: "EDIT_SUCCESS",
+                success: true,
+                en: "Manager panel edited success",
+                fa: "پنل منیجر بات با موفقیت ویرایش شد",
+            },
+            DELETE_SUCCESS: {
+                code: "DELETE_SUCCESS",
+                success: true,
+                en: "Manager panel deleted success",
+                fa: "پنل منیجر بات با موفقیت حذف شد",
+            },
+            PANEL_NOT_FOUND: {
+                code: "PANEL_NOT_FOUND",
+                success: false,
+                en: "Manage panel not found",
+                fa: "پنل منیجر بات یافت نشد",
+            },
+        },
+        MUSIC_PANEL: {
+            CREATE_SUCCESS: {
+                code: "CREATE_SUCCESS",
+                success: true,
+                en: "Music panel added success",
+                fa: "پنل موزیک بات با موفقیت اضافه شد",
+            },
+            EDIT_SUCCESS: {
+                code: "EDIT_SUCCESS",
+                success: true,
+                en: "Music panel edited success",
+                fa: "پنل موزیک بات با موفقیت ویرایش شد",
+            },
+            DELETE_SUCCESS: {
+                code: "DELETE_SUCCESS",
+                success: true,
+                en: "Music panel deleted success",
+                fa: "پنل موزیک بات با موفقیت حذف شد",
+            },
+            PANEL_NOT_FOUND: {
+                code: "PANEL_NOT_FOUND",
+                success: false,
+                en: "Music panel not found",
+                fa: "پنل موزیک بات یافت نشد",
+            },
+        },
+        RADIOS: {
+            ADDED_SUCCESS: {
+                code: "ADDED_SUCCESS",
+                success: true,
+                en: "Radio added success",
+                fa: "رادیو با موفقیت اضافه شد",
+            },
+            DELETE_SUCCESS: {
+                code: "DELETE_SUCCESS",
+                success: true,
+                en: "Radio deleted success",
+                fa: "رادیو با موفقیت حذف شد",
+            },
+            NOT_FOUND: {
+                code: "NOT_FOUND",
+                success: false,
+                en: "Radio with requested id not found",
+                fa: "رادیو با ایدی درخواست شده یافت نشد",
+            },
+        },
+        PACKAGES: {
+            NAME_IN_USE: {
+                code: "NAME_IN_USE",
+                success: false,
+                en: "Package name in use",
+                fa: "اسم پکیج در حال استفاده میباشد",
+            },
+            CREATE_SUCCESS: {
+                code: "CREATE_SUCCESS",
+                success: true,
+                en: "Package created success",
+                fa: "پکیج با موفقیت ساخته شد",
+            },
+            EDIT_SUCCESS: {
+                code: "EDIT_SUCCESS",
+                success: true,
+                en: "Edited success",
+                fa: "پکیج با موفقیت ویرایش شد",
+            },
+            DELETE_SUCCESS: {
+                code: "DELETE_SUCCESS",
+                success: true,
+                en: "Deleted success",
+                fa: "پکیج با موفقیت حذف شد",
+            },
+            PACKAGE_NOT_FOUND: {
+                code: "PACKAGE_NOT_FOUND",
+                success: false,
+                en: "Package with requested id not found",
+                fa: "پکیج با ایدی درخواست شده یافت نشد",
+            },
+        },
+    },
+    MANAGER_BOT: {
+        CREATED: {
+            code: "CREATED",
+            success: true,
+            en: "Bot created successfully",
+            fa: "ربات منیجر با موفقیت ساخته شد",
+        },
+        DELETED: {
+            code: "DELETED",
+            success: true,
+            en: "Bot deleted successfully",
+            fa: "ربات منیجر با موفقیت حذف شد",
+        },
+        DISCONNECTED: {
+            code: "DISCONNECTED",
+            success: true,
+            en: "Bot disconnected successfully",
+            fa: "ربات منیجر با موفقیت دیسکانکت شد",
+        },
+
+        NOT_FOUND: {
+            code: "NOT_FOUND",
+            success: false,
+            en: "Bot with requested id not found",
+            fa: "بات با ایدی درخواست شده یافت نشد",
+        },
+        ACTIVATED: {
+            code: "ACTIVATED",
+            success: true,
+            en: "Bot activated success",
+            fa: "ربات منیجر با موفقیت فعال شد",
+        },
+        EXTEND_UNLIMITED: {
+            code: "EXTEND_UNLIMITED",
+            success: false,
+            en: "Package is unlimited",
+            fa: "نمیتوان پکیج دائمی را تمدید کرد",
+        },
+        EXTENDED: {
+            code: "EXTENDED",
+            success: true,
+            en: "Bot extended successfully",
+            fa: "بات با موفقیت تمدید شد",
+        },
+        BOT_EXPIRED: {
+            code: "BOT_EXPIRED",
+            success: false,
+            en: "Bot is expired",
+            fa: "تمدید ربات به اتمام رسیده است",
+        },
+        TEMPLATE_NAME_IN_USE: {
+            code: "TEMPLATE_NAME_IN_USE",
+            success: false,
+            en: "Template name is in use",
+            fa: "اسم تمپلیت در دسترس نمیباشد",
+        },
+        NOT_CONNECTED: {
+            code: "NOT_CONNECTED",
+            success: false,
+            en: "Bot is not connected already",
+            fa: "ربات منیجر متصل نمیباشد",
+        },
+        CONNECT: {
+            CONN_REFUSED: {
+                code: "CONN_REFUSED",
+                success: false,
+                en: "Bot connection refused",
+                fa: "ربات به سرور متصل نشد",
+            },
+            ALREADY_CONNECTED: {
+                code: "ALREADY_CONNECTED",
+                success: false,
+                en: "Bot already connected",
+                fa: "ربات متصل میباشد",
+            },
+            SUCCESS: {
+                code: "SUCCESS",
+                success: true,
+                en: "Bot connected success",
+                fa: "ربات منیجر با موفقیت کانکت شد",
+            },
+        },
+        RECONNECT: {
+            CONN_REFUSED: {
+                code: "CONN_REFUSED",
+                success: false,
+                en: "Bot connection refused",
+                fa: "ربات به سرور متصل نشد",
+            },
+
+            SUCCESS: {
+                code: "SUCCESS",
+                success: true,
+                en: "Bot connected success",
+                fa: "ربات منیجر با موفقیت ریکانکت شد",
+            },
+        },
+        SUSPENDED: {
+            code: "SUSPENDED",
+            success: true,
+            en: "Bot suspended success",
+            fa: "ربات منیجر با موفقیت غیرفعال شد",
+        },
+        SERVER_FETCH: {
+            ECONNREFUSED: {
+                code: "ECONNREFUSED",
+                success: false,
+                en: "Connection to server refused",
+                fa: "به سرور متصل نشد",
+            },
+            INVALID_LOGIN: {
+                code: "INVALID_LOGIN",
+                success: false,
+                en: "Username or password is incorrect",
+                fa: "نام کاربری یا پسورد اشتباه میباشد",
+            },
+        },
+    },
+    LOGS: {
+        LOGS_FETCHED: {
+            code: "LOGS_FETCHED",
+            success: true,
+            en: "Logs fetched successfully",
+            fa: "لاگ ها با موفقیت دریافت شدند",
+        },
+        INVALID_LOG_TYPE: {
+            code: "INVALID_LOG_TYPE",
+            success: false,
+            en: "Invalid log type",
+            fa: "نوع لاگ معتبر نمیباشد",
+        },
+        ACCESS_DENIED: {
+            code: "ACCESS_DENIED",
+            success: false,
+            en: "Access denied to this log type",
+            fa: "دسترسی به این نوع لاگ مجاز نمیباشد",
+        },
+        NOT_FOUND: {
+            code: "NOT_FOUND",
+            success: false,
+            en: "Log file not found",
+            fa: "فایل لاگ یافت نشد",
+        },
+        LOG_CLEARED: {
+            code: "LOG_CLEARED",
+            success: true,
+            en: "Log file cleared successfully",
+            fa: "فایل لاگ با موفقیت پاک شد",
+        },
+    },
+}

@@ -1,0 +1,55 @@
+const TsManagerBots = require("../../../models/TsManagerBots")
+const { ManagerBotPanel } = require("../../../lib/managerBot/ManagerBotPanel")
+const apiCodes = require("../../../constants/apiCodes")
+const responses = require("../../../constants/responses")
+const createTemplate = require("../../../lib/managerBot/createTemplate")
+const { createLogger } = require("../../../utils/logger")
+
+module.exports = async (req, res) => {
+    try {
+        const { botId } = req.body
+        const { username, scope } = req.user
+
+        const bot = await TsManagerBots.findByPk(botId)
+        const botLogger = createLogger("managerBot", botId)
+
+        if (!bot || bot.state == "suspended") {
+            botLogger.error(`بات با ایدی ${botId} توسط ${username} پیدا نشد یا معلق است`)
+            return res.status(apiCodes.BAD_REQUEST).json(responses.MANAGER_BOT.NOT_FOUND)
+        }
+        if (scope == "reseller" && bot.author !== username) {
+            botLogger.error(`دسترسی غیرمجاز برای ${username} به بات ${botId}`)
+            return res.status(apiCodes.FORBIDDEN).json(responses.COMMON.ACCESS_DENIED)
+        }
+
+        // Fetch bots panel
+        const panel = ManagerBotPanel.getPanel(bot.panel_id)
+        if (!panel || !panel?.socket?.connected) {
+            botLogger.error(`پنل ${bot.panel_id} برای بات ${botId} آفلاین یا پیدا نشد`)
+            return res.status(apiCodes.BAD_REQUEST).json(responses.PANEL.IS_OFFLINE)
+        }
+
+        try {
+            await panel.reconnectBot({ templateName: bot.template_name })
+            bot.status = "online"
+        } catch (err) {
+            const errorCode = err?.error || ""
+
+            if (errorCode == "NOT_FOUND") {
+                await panel.createBot(createTemplate(bot.template_name, bot.channels, bot.conn))
+            } else if (errorCode == "ECONNREFUSED") {
+                return res.status(apiCodes.BAD_REQUEST).json(responses.MANAGER_BOT.RECONNECT.CONN_REFUSED)
+            } else {
+                throw err
+            }
+        }
+        await bot.save()
+
+        botLogger.info(`بات توسط ${username} مجدداً متصل شد`)
+        return res.status(apiCodes.SUCCESS).json(responses.MANAGER_BOT.RECONNECT.SUCCESS)
+    } catch (err) {
+        console.error(err)
+
+        return res.status(apiCodes.INTERNAL_SERVER_ERROR).json(responses.COMMON.INTERNAL_SERVER_ERROR)
+    }
+}

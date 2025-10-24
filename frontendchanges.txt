@@ -1,0 +1,7 @@
+activate api body --> id
+changeQueryPass api body --> id
+serverPackages api body packageName --> packageId
+createServer subDomain --> subDomain
+createServer info --> information
+deleteserver {serverport, queryport} --> serverId
+extendServer {serverport, queryport} --> serverId

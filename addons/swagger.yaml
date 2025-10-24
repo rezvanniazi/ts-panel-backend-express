@@ -1,0 +1,2621 @@
+openapi: 3.0.0
+info:
+  title: Ts-panel-backend For nedxco.ir
+  description: ' Api documentation of Nedxco panel backend'
+  version: 1.0.0
+servers:
+- url: https://panel.nedxco.ir:9686/api
+  description: Nedxco panel api
+security:
+- accessCode:
+  - read
+  - write
+paths:
+  /audio-bot/activate:
+    post:
+      tags:
+      - Audiobot
+      summary: Activate audiobot
+      description: Activate Bot
+      operationId: post-audio-bot-activate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/audiobot_activate_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/AudioBotActivated"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "404":
+          $ref: "#/components/responses/AudioBotNotFound"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+      security:
+      - X-API-KEY: []
+  /audio-bot/change-playing:
+    post:
+      tags:
+      - Audiobot
+      summary: Change playing music
+      description: Change current playing music
+      operationId: post-audio-bot-change-playing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/audiobot_changeplaying_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/AudioBotRadioChanged"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "404":
+          $ref: "#/components/responses/AudioBotNotFound"
+        "438":
+          $ref: "#/components/responses/PanelIsOffline"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /audio-bot/connect:
+    post:
+      tags:
+      - Audiobot
+      summary: Connect audio bot to server
+      description: Connects Audiobot to server
+      operationId: post-audio-bot-connect
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/audiobot_connect_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/AudioBotConnectSuccess"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "404":
+          $ref: "#/components/responses/AudioBotNotFound"
+        "438":
+          $ref: "#/components/responses/PanelIsOffline"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /audio-bot/connect-bulk:
+    post:
+      tags:
+      - Audiobot
+      summary: Connect Bulk
+      description: Connect multiple audio bots with id if no selecteds specified connects all bots
+      operationId: get-audio-bot-connect-bulk
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/audiobot_connectbulk_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/AudioBotConnectSuccess"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /audio-bot/create:
+    post:
+      tags:
+      - Audiobot
+      summary: Create Bot
+      description: |
+        Create Audio bot
+      operationId: get-audio-bot-create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/audiobot_create_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/AudioBotCreated"
+        "400":
+          $ref: "#/components/responses/PanelNoAvailablePanel"
+        "404":
+          $ref: "#/components/responses/AudioBotPackageNotFound"
+        "434":
+          $ref: "#/components/responses/UserInsufficientBalance"
+        "438":
+          $ref: "#/components/responses/PanelIsOffline"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /audio-bot/delete:
+    post:
+      tags:
+      - Audiobot
+      summary: Delete audiobot
+      description: Delete audiobot
+      operationId: post-audio-bot-delete
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/audiobot_delete_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/AudioBotDeleted"
+        "400":
+          $ref: "#/components/responses/AudioBotPackageNotFound"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "404":
+          $ref: "#/components/responses/AudioBotNotFound"
+        "438":
+          $ref: "#/components/responses/PanelIsOffline"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+      security:
+      - X-API-KEY: []
+  /audio-bot/disconnect:
+    post:
+      tags:
+      - Audiobot
+      summary: disconnect audio bot from server
+      description: Disconnec Audiobot from server
+      operationId: post-audio-bot-disconnect
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/audiobot_disconnect_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/AudioBotDisconnected"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "404":
+          $ref: "#/components/responses/AudioBotNotFound"
+        "438":
+          $ref: "#/components/responses/PanelIsOffline"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /audio-bot/disconnect-bulk:
+    post:
+      tags:
+      - Audiobot
+      summary: Disconnect Bulk
+      description: "Disconnec multiple audio bots with id, if no selecteds specified connects all bots"
+      operationId: get-audio-bot-disconnect-bulk
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/audiobot_disconnectbulk_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/AudioBotDisconnected"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /audio-bot/edit:
+    post:
+      tags:
+      - Audiobot
+      summary: Edit Audiobot
+      description: Edit Audiobot
+      operationId: post-audio-bot-edit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/audiobot_edit_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/AudioBotDeleted"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "438":
+          $ref: "#/components/responses/PanelIsOffline"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /audio-bot/extend:
+    post:
+      tags:
+      - Audiobot
+      summary: Extend audio bot
+      description: Extend Audio bot with it's package
+      operationId: post-audio-bot-extend
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/audiobot_extend_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/AudioBotExtended"
+        "400":
+          $ref: "#/components/responses/AudioBotPackageNotFound"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "404":
+          $ref: "#/components/responses/AudioBotPackageNotFound"
+        "434":
+          $ref: "#/components/responses/UserInsufficientBalance"
+        "438":
+          $ref: "#/components/responses/PanelIsOffline"
+        "439":
+          $ref: "#/components/responses/AudioBotExtendUnlimited"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /audio-bot/get-bot/{botId}:
+    get:
+      tags:
+      - Audiobot
+      summary: GET audio bot info
+      description: Get bot info with specified botId
+      operationId: get-audio-bot-get-bot-botId
+      parameters:
+      - name: botId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_200"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "404":
+          $ref: "#/components/responses/AudioBotNotFound"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /audio-bot/get-bot-list:
+    get:
+      tags:
+      - Audiobot
+      summary: Returns Bot List
+      description: Returns bot list if token is admin returns all bots and if token is reseller returns only your own b
+      operationId: get-audio-bot-get-bot-list
+      responses:
+        "200":
+          description: "{BotObject}"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /audio-bot/reconnect-bulk:
+    post:
+      tags:
+      - Audiobot
+      summary: Reconnect Bulk
+      description: "Reconnect multiple audio bots with id, if no selecteds specified reconnects all bots"
+      operationId: post-audio-bot-disconnect-bulk
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/audiobot_reconnectbulk_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/AudioBotReconnected"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /audio-bot/reconnect:
+    post:
+      tags:
+      - Audiobot
+      summary: reconnect audio bot to server
+      description: Reconnect Audiobot to server
+      operationId: post-audio-bot-reconnect
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/audiobot_reconnect_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/AudioBotReconnected"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "404":
+          $ref: "#/components/responses/AudioBotNotFound"
+        "438":
+          $ref: "#/components/responses/PanelIsOffline"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /audio-bot/suspend:
+    post:
+      tags:
+      - Audiobot
+      summary: Suspends audiobot
+      description: Disconnects and suspends audiobot
+      operationId: post-audio-bot-suspend
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/audiobot_suspend_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/AudioBotSuspended"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /server/activate:
+    post:
+      tags:
+      - Teamspeak
+      summary: Activate Teamspeak
+      description: Activate teamspeak server
+      operationId: post-server-activate
+      requestBody:
+        content:
+          application/zip:
+            schema:
+              $ref: "#/components/schemas/server_activate_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/TeamSpeakActivated"
+        "404":
+          $ref: "#/components/responses/TeamSpeakNotFound"
+        "431":
+          $ref: "#/components/responses/TeamSpeakExpired"
+  /server/snapshot/create:
+    post:
+      tags:
+      - Teamspeak
+      summary: Create snapshot for teamspeak
+      operationId: post-server-snapshot-create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/snapshot_create_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/TeamSpeakSnapshotCreated"
+        "400":
+          $ref: "#/components/responses/TeamSpeakNotFound"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "440":
+          $ref: "#/components/responses/TeamSpeakSnapshotFiveSnapshot"
+  /server/snapshot/deploy:
+    post:
+      tags:
+      - Teamspeak
+      summary: Deploy Snapshot
+      description: Deploy snapshot to server
+      operationId: post-server-snapshot-deploy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/snapshot_deploy_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/TeamSpeakSnapshotDeployed"
+        "400":
+          $ref: "#/components/responses/TeamSpeakNotFound"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /server/snapshot/delete:
+    delete:
+      tags:
+      - Teamspeak
+      summary: Delete snapshot
+      description: Delete snapshot from server folder
+      operationId: delete-server-snapshot-delete
+      requestBody:
+        content:
+          application/zip:
+            schema:
+              $ref: "#/components/schemas/snapshot_delete_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/TeamSpeakSnapshotDeleted"
+        "400":
+          $ref: "#/components/responses/TeamSpeakNotFound"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+  /server/snapshot/getall:
+    post:
+      tags:
+      - Teamspeak
+      summary: Get all snapshot based on serverId
+      description: returns snapshot list of a server
+      operationId: post-server-snapshot-getall
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/snapshot_getall_body"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  x-stoplight:
+                    id: 0efh2ksbrqkj2
+        "400":
+          description: Bad Request
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+  /server/create:
+    post:
+      tags:
+      - Teamspeak
+      summary: Create teamspeak server
+      description: Create teamspeak server
+      operationId: post-server-create
+      requestBody:
+        content:
+          application/zip:
+            schema:
+              $ref: "#/components/schemas/server_create_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/TeamSpeakCreated"
+        "404":
+          description: Not Found
+        "432":
+          $ref: "#/components/responses/TeamSpeakPortNotValid"
+        "434":
+          $ref: "#/components/responses/UserInsufficientBalance"
+        "441":
+          $ref: "#/components/responses/TeamSpeakPackageNotFound"
+        "442":
+          $ref: "#/components/responses/TeamSpeakCompanyNotFound"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /server/delete:
+    delete:
+      tags:
+      - Teamspeak
+      summary: Delete Teamspeak server
+      description: Delete teamspeak server and return the remained amount to the owner
+      operationId: delete-server-delete
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/server_delete_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/TeamSpeakDeleted"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /server/edit:
+    post:
+      tags:
+      - Teamspeak
+      summary: Edit Teamspeak server
+      description: Edit teamspeak server
+      operationId: post-server-edit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/server_edit_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/TeamSpeakCreated"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "404":
+          $ref: "#/components/responses/TeamSpeakNotFound"
+        "442":
+          $ref: "#/components/responses/TeamSpeakCompanyNotFound"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /server/extend:
+    post:
+      tags:
+      - Teamspeak
+      summary: Extend server
+      description: Extend teamspeak server by package.package_days
+      operationId: post-server-extend
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/server_extend_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/TeamSpeakExtended"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "404":
+          $ref: "#/components/responses/TeamSpeakNotFound"
+        "439":
+          $ref: "#/components/responses/TeamSpeakPackageNotFound"
+        "441":
+          $ref: "#/components/responses/TeamSpeakExtendUnlimited"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /server/get-server:
+    get:
+      tags:
+      - Teamspeak
+      summary: Get server
+      description: Returns server object
+      operationId: get-server-get-server-serverId
+      parameters:
+      - name: serverId
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_200_1"
+        "404":
+          $ref: "#/components/responses/TeamSpeakNotFound"
+  /server/get-server-list:
+    get:
+      tags:
+      - Teamspeak
+      summary: Get server list
+      description: Returns all of the servers
+      operationId: get-server-get-server-list
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/inline_response_200_2"
+  /server/get-used-ports:
+    get:
+      tags:
+      - Teamspeak
+      summary: Get Used Ports
+      description: Returns all of the used ports
+      operationId: get-server-get-used-ports
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: integer
+                  x-stoplight:
+                    id: c83r8xf9sae6f
+  /server/restart:
+    post:
+      tags:
+      - Teamspeak
+      summary: Restart Server
+      description: Restarts server
+      operationId: post-server-restart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/server_restart_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/TeamSpeakRestartSuccess"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "404":
+          $ref: "#/components/responses/TeamSpeakNotFound"
+        "435":
+          $ref: "#/components/responses/TeamSpeakNotActive"
+        "443":
+          $ref: "#/components/responses/TeamSpeakRestartUnknown"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /server/restart-bulk:
+    post:
+      tags:
+      - Teamspeak
+      summary: Restart multiple server
+      description: Restart multiple server with list of serverId or restart all
+      operationId: post-server-restart-bulk
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: integer
+                x-stoplight:
+                  id: n810dd0qqvb0v
+      responses:
+        "200":
+          $ref: "#/components/responses/TeamSpeakRestartSuccess"
+  /server/start:
+    post:
+      tags:
+      - Teamspeak
+      summary: Start Server
+      description: Restarts server
+      operationId: post-server-start
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/server_start_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/TeamSpeakStartSuccess"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "404":
+          $ref: "#/components/responses/TeamSpeakNotFound"
+        "435":
+          $ref: "#/components/responses/TeamSpeakNotActive"
+        "437":
+          $ref: "#/components/responses/TeamSpeakStartAlreadyRunning"
+        "443":
+          $ref: "#/components/responses/TeamSpeakStartUnknown"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /server/start-bulk:
+    post:
+      tags:
+      - Teamspeak
+      summary: Start multiple server
+      description: Start multiple server with list of serverId or restart all
+      operationId: post-server-start-bulk
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: integer
+      responses:
+        "200":
+          $ref: "#/components/responses/TeamSpeakStartSuccess"
+  /server/stop:
+    post:
+      tags:
+      - Teamspeak
+      summary: Stop Server
+      description: Stop server
+      operationId: post-server-stop
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/server_stop_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/TeamSpeakStopSuccess"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "404":
+          $ref: "#/components/responses/TeamSpeakNotFound"
+        "435":
+          $ref: "#/components/responses/TeamSpeakNotActive"
+        "436":
+          $ref: "#/components/responses/TeamSpeakStopNotRunning"
+        "443":
+          $ref: "#/components/responses/TeamSpeakStartUnknown"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /server/stop-bulk:
+    post:
+      tags:
+      - Teamspeak
+      summary: Stop multiple server
+      description: Stop multiple server with list of serverId or restart all
+      operationId: post-server-stop-bulk
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: integer
+      responses:
+        "200":
+          $ref: "#/components/responses/TeamSpeakStopSuccess"
+  /server/suspend:
+    post:
+      tags:
+      - Teamspeak
+      summary: Suspend server
+      description: Stop and suspend server
+      operationId: post-server-suspend
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/server_suspend_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/TeamspeakSuspended"
+        "404":
+          $ref: "#/components/responses/TeamSpeakNotFound"
+        "500":
+          description: Internal Server Error
+  /server/query/get-servergroup-list:
+    post:
+      tags: 
+        - Teamspeak
+      summary: Servergroup List
+      description: Returns servergroup list by serverId
+      operationId: post-server-query-get-servergroup-list
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/query_getservergrouplist_body"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_200_3"
+        "400":
+          $ref: "#/components/responses/TeamSpeakNotActive"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "404":
+          $ref: "#/components/responses/TeamSpeakNotFound"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /server/query/add-servergroup:
+    post:
+      tags:
+      - Teamspeak
+      summary: Add client to servergroup
+      operationId: post-server-add-servergroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/query_addservergroup_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/CommonSuccess"
+        "400":
+          $ref: "#/components/responses/TeamSpeakNotActive"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "404":
+          $ref: "#/components/responses/TeamSpeakNotFound"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /server/query/del-servergroup:
+    post:
+      tags:
+      - Teamspeak
+      summary: Delete client from servergroup
+      operationId: post-server-query-del-servergroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/query_delservergroup_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/CommonSuccess"
+        "400":
+          $ref: "#/components/responses/TeamSpeakNotActive"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "404":
+          description: Not Found
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /server/query/get-online-list:
+    post:
+      tags:
+      - Teamspeak
+      summary: Onlineclients List
+      operationId: post-server-query-get-online-list
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/query_getonlinelist_body"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_200_4"
+        "400":
+          $ref: "#/components/responses/TeamSpeakNotActive"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "404":
+          $ref: "#/components/responses/TeamSpeakNotFound"
+  /server/query/kick-client:
+    post:
+      tags: 
+        - Teamspeak
+      summary: Kick client from server
+      operationId: post-server-query-kick-client
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/query_kickclient_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/CommonSuccess"
+        "400":
+          $ref: "#/components/responses/TeamSpeakNotActive"
+        "403":
+          description: Forbidden
+        "404":
+          $ref: "#/components/responses/TeamSpeakNotFound"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+  /server/query/banclient:
+    post:
+      tags:
+      - Teamspeak
+      summary: Ban client from server
+      operationId: post-server-query-banclient
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/query_banclient_body"
+      responses:
+        "200":
+          $ref: "#/components/responses/CommonSuccess"
+        "400":
+          $ref: "#/components/responses/TeamSpeakNotActive"
+        "403":
+          $ref: "#/components/responses/CommonAccessDenied"
+        "404":
+          $ref: "#/components/responses/TeamSpeakNotFound"
+        "500":
+          $ref: "#/components/responses/CommonInternalServerError"
+components:
+  schemas:
+    ApiResponse:
+      required:
+      - code
+      - en
+      - fa
+      - success
+      type: object
+      properties:
+        code:
+          type: string
+          description: Response code identifier
+        success:
+          type: boolean
+          description: Indicates if the request was successful
+        en:
+          type: string
+          description: English message
+        fa:
+          type: string
+          description: Persian message
+    audiobot_activate_body:
+      type: object
+      properties:
+        botId:
+          type: integer
+          x-stoplight:
+            id: 18jekq31oake6
+    audiobot_changeplaying_body:
+      type: object
+      properties:
+        radioName:
+          type: string
+          x-stoplight:
+            id: k2m0v634h89xp
+        botId:
+          type: integer
+          x-stoplight:
+            id: gakb5trj9djh8
+    audiobot_connect_body:
+      type: object
+      properties:
+        botId:
+          type: integer
+          x-stoplight:
+            id: r5l0neprq9ern
+    audiobot_connectbulk_body:
+      type: object
+      properties:
+        selecteds:
+          type: array
+          x-stoplight:
+            id: g93jry9mamdhy
+          items:
+            type: integer
+            x-stoplight:
+              id: 28sjxdmh7dfuw
+    audiobot_create_body:
+      type: object
+      properties:
+        botName:
+          type: string
+          x-stoplight:
+            id: j5dy4fc4yvh40
+        botServerIp:
+          type: string
+          x-stoplight:
+            id: v1syrxe99gsgx
+        botDefaultChannelName:
+          type: string
+          x-stoplight:
+            id: gh5dtgugg87j0
+        botChannelCommanderIsOn:
+          type: boolean
+          x-stoplight:
+            id: lelfdh72o8zgf
+        botPackageName:
+          type: string
+          x-stoplight:
+            id: 22l0x6eqkcvia
+        panelId:
+          type: integer
+          x-stoplight:
+            id: 3whz51o7awraw
+        information:
+          type: string
+          x-stoplight:
+            id: pnsodvtc47mqg
+        autorenew:
+          type: boolean
+          x-stoplight:
+            id: yeoye9xjk2igh
+    audiobot_delete_body:
+      type: object
+      properties:
+        botId:
+          type: integer
+    audiobot_disconnect_body:
+      type: object
+      properties:
+        botId:
+          type: integer
+    audiobot_disconnectbulk_body:
+      type: object
+      properties:
+        selecteds:
+          type: array
+          items:
+            type: integer
+    audiobot_edit_body:
+      required:
+      - botId
+      type: object
+      properties:
+        botId:
+          type: integer
+          x-stoplight:
+            id: tps1xzuknfyg5
+        botName:
+          type: string
+          x-stoplight:
+            id: kwz02pm5shc0y
+        botServerIp:
+          type: string
+          x-stoplight:
+            id: 33am6ddvsv4wk
+        botChannelCommanderIsOn:
+          type: boolean
+          x-stoplight:
+            id: 1ux02ofd29dld
+        information:
+          type: string
+          x-stoplight:
+            id: 2lcb3w5mqxecb
+        panelId:
+          type: integer
+          x-stoplight:
+            id: jqarhv9movw52
+        autorenew:
+          type: boolean
+          x-stoplight:
+            id: lc52825yo4xl2
+    audiobot_extend_body:
+      type: object
+      properties:
+        botId:
+          type: integer
+    inline_response_200:
+      type: object
+      properties:
+        id:
+          type: number
+          x-stoplight:
+            id: 86mi8m7ofe0ye
+        name:
+          type: string
+          x-stoplight:
+            id: lshslfvt02ot1
+        bot_server_ip:
+          type: string
+          x-stoplight:
+            id: cqpuf042vz29z
+        bot_default_channel_name:
+          type: string
+          x-stoplight:
+            id: h80s3cu0tzfp9
+        bot_channel_commander_is_on:
+          type: boolean
+          x-stoplight:
+            id: unczzckq3jgp4
+        bot_owner:
+          type: string
+          x-stoplight:
+            id: qsyiwz6wbinyd
+        information:
+          type: string
+          x-stoplight:
+            id: 2snzi88mx3w1h
+        created:
+          type: string
+          format: date
+          x-stoplight:
+            id: n43r31as165um
+        expires:
+          type: string
+          format: date
+          x-stoplight:
+            id: antk4fksouooh
+        package_name:
+          type: string
+          x-stoplight:
+            id: 4486k59zaongb
+        type:
+          type: string
+          x-stoplight:
+            id: dmb1raqxxkkzw
+          enum:
+          - youtube
+          - normal
+        template_name:
+          type: string
+          x-stoplight:
+            id: hj2zc0e6unl04
+        state:
+          type: string
+          x-stoplight:
+            id: 9dks0p9emyels
+          enum:
+          - active
+          - suspended
+        playing:
+          type: string
+          x-stoplight:
+            id: c31m6srw4yq8v
+        status:
+          type: string
+          x-stoplight:
+            id: iwulobiwrlx8h
+          enum:
+          - connected
+          - connecting
+          - offline
+        panel_id:
+          type: integer
+          x-stoplight:
+            id: mp9ba6js58peq
+        autorenew:
+          type: boolean
+          x-stoplight:
+            id: wi1oejtmjgdow
+    audiobot_reconnectbulk_body:
+      type: object
+      properties:
+        selecteds:
+          type: array
+          items:
+            type: integer
+    audiobot_reconnect_body:
+      type: object
+      properties:
+        botId:
+          type: integer
+    audiobot_suspend_body:
+      type: object
+      properties:
+        botId:
+          type: string
+          x-stoplight:
+            id: lifra4xjr9zm6
+    server_activate_body:
+      type: object
+      properties:
+        serverId:
+          type: string
+          x-stoplight:
+            id: 0wpfwonp4j3qp
+    snapshot_create_body:
+      type: object
+      properties:
+        serverId:
+          type: integer
+          x-stoplight:
+            id: zl8s4g39tbg43
+    snapshot_deploy_body:
+      type: object
+      properties:
+        serverId:
+          type: integer
+          x-stoplight:
+            id: 198d8kq2p3p6o
+        snapshotName:
+          type: string
+          x-stoplight:
+            id: 5bhtrv8tyskxu
+    snapshot_delete_body:
+      type: object
+      properties:
+        serverId:
+          type: integer
+          x-stoplight:
+            id: zdmhrox17623t
+        snapshotName:
+          type: string
+          x-stoplight:
+            id: 8pmoe1ywntros
+    snapshot_getall_body:
+      type: object
+      properties:
+        serverId:
+          type: integer
+          x-stoplight:
+            id: 3uwxfuuf5e7hv
+    server_create_body:
+      type: object
+      properties:
+        packageName:
+          type: string
+          x-stoplight:
+            id: t0yy2cqgdaj6h
+        version:
+          type: string
+          x-stoplight:
+            id: 32rj5bd0gjcff
+          enum:
+          - 1.5.6
+          - 1.4.22
+        serverport:
+          type: string
+          x-stoplight:
+            id: pycqfa5dnnl4g
+        queryport:
+          type: string
+          x-stoplight:
+            id: lwwwqf4wcn28v
+        information:
+          type: string
+          x-stoplight:
+            id: eiko5jjb7r8pp
+        subdomain:
+          type: string
+          x-stoplight:
+            id: ci75elfyf8x78
+        autorenew:
+          type: boolean
+          x-stoplight:
+            id: 6ivx1l32qmv1u
+    server_delete_body:
+      type: object
+      properties:
+        serverId:
+          type: integer
+          x-stoplight:
+            id: m2o5t5ueeq36a
+    server_edit_body:
+      type: object
+      properties:
+        serverId:
+          type: integer
+          x-stoplight:
+            id: g7sfe0c4pk3be
+        packageName:
+          type: string
+          x-stoplight:
+            id: mmuykrsrb5mc3
+        version:
+          type: string
+          x-stoplight:
+            id: x8mfukundbp4n
+          enum:
+          - 1.5.6
+          - 1.4.22
+        querypassword:
+          type: string
+          x-stoplight:
+            id: ongg3yx9ibh53
+        author:
+          type: string
+          x-stoplight:
+            id: g9dqmblcaeesb
+        information:
+          type: string
+          x-stoplight:
+            id: sqnwaov4ogpq9
+        subdomain:
+          type: string
+          x-stoplight:
+            id: m2t5ywo84jkq6
+        autorenew:
+          type: boolean
+          x-stoplight:
+            id: jn3cek8z976ew
+    server_extend_body:
+      type: object
+      properties:
+        serverId:
+          type: integer
+          x-stoplight:
+            id: uz7s0n4ohaclj
+    inline_response_200_1:
+      type: object
+      properties:
+        id:
+          type: integer
+          x-stoplight:
+            id: qfc28fuxyvnju
+        state:
+          type: string
+          x-stoplight:
+            id: 659ur9hf1l8rv
+        server_port:
+          type: string
+          x-stoplight:
+            id: k15gbunvg8ha0
+        query_port:
+          type: string
+          x-stoplight:
+            id: ml6uuo8hwzqrk
+        file_port:
+          type: string
+          x-stoplight:
+            id: btdaycwfek1vk
+        query_password:
+          type: string
+          x-stoplight:
+            id: 1xgbwbq4u499g
+        author:
+          type: string
+          x-stoplight:
+            id: zag0qxh14gnhc
+        slots:
+          type: integer
+          x-stoplight:
+            id: o45njmzgpait7
+        created:
+          type: string
+          format: date-time
+          x-stoplight:
+            id: cc6we06ftb8ld
+        expires:
+          type: string
+          format: date
+          x-stoplight:
+            id: l5d4stepr8hkx
+        version:
+          type: string
+          x-stoplight:
+            id: twiijxfsiyytb
+          enum:
+          - 1.5.6
+          - 1.4.22
+        info:
+          type: string
+          x-stoplight:
+            id: ac7elhcwavnww
+        subdomain_record_id:
+          type: string
+          x-stoplight:
+            id: xi5vadwgrzo2q
+        subdomain_name:
+          type: string
+          x-stoplight:
+            id: q07nvzq4mmbmu
+        autorenew:
+          type: boolean
+          x-stoplight:
+            id: wsshe3nvfsgeq
+        status:
+          type: string
+          x-stoplight:
+            id: lyoykqfkazk7i
+        onlines:
+          type: integer
+          x-stoplight:
+            id: wdxmhbfn2k5hh
+    inline_response_200_2:
+      type: object
+      properties:
+        id:
+          type: integer
+          x-stoplight:
+            id: qfc28fuxyvnju
+        state:
+          type: string
+          x-stoplight:
+            id: 659ur9hf1l8rv
+        server_port:
+          type: string
+          x-stoplight:
+            id: k15gbunvg8ha0
+        query_port:
+          type: string
+          x-stoplight:
+            id: ml6uuo8hwzqrk
+        file_port:
+          type: string
+          x-stoplight:
+            id: btdaycwfek1vk
+        query_password:
+          type: string
+          x-stoplight:
+            id: 1xgbwbq4u499g
+        author:
+          type: string
+          x-stoplight:
+            id: zag0qxh14gnhc
+        slots:
+          type: integer
+          x-stoplight:
+            id: o45njmzgpait7
+        created:
+          type: string
+          format: date-time
+          x-stoplight:
+            id: cc6we06ftb8ld
+        expires:
+          type: string
+          format: date
+          x-stoplight:
+            id: l5d4stepr8hkx
+        version:
+          type: string
+          x-stoplight:
+            id: twiijxfsiyytb
+          enum:
+          - 1.5.6
+          - 1.4.22
+        info:
+          type: string
+          x-stoplight:
+            id: ac7elhcwavnww
+        subdomain_record_id:
+          type: string
+          x-stoplight:
+            id: xi5vadwgrzo2q
+        subdomain_name:
+          type: string
+          x-stoplight:
+            id: q07nvzq4mmbmu
+        autorenew:
+          type: boolean
+          x-stoplight:
+            id: wsshe3nvfsgeq
+        status:
+          type: string
+          x-stoplight:
+            id: lyoykqfkazk7i
+        onlines:
+          type: integer
+          x-stoplight:
+            id: wdxmhbfn2k5hh
+      x-stoplight:
+        id: onv2m294y8107
+    server_restart_body:
+      required:
+      - serverId
+      type: object
+      properties:
+        serverId:
+          type: integer
+          x-stoplight:
+            id: 168gt2fn0tr7q
+    server_start_body:
+      required:
+      - serverId
+      type: object
+      properties:
+        serverId:
+          type: integer
+    server_stop_body:
+      required:
+      - serverId
+      type: object
+      properties:
+        serverId:
+          type: integer
+    server_suspend_body:
+      type: object
+      properties:
+        serverId:
+          type: integer
+          x-stoplight:
+            id: 24wqofb1qd702
+    query_getservergrouplist_body:
+      type: object
+      properties:
+        serverId:
+          type: integer
+          x-stoplight:
+            id: 1yfa0harmyl4d
+    inline_response_200_3:
+      type: object
+      properties:
+        sgid:
+          type: integer
+          x-stoplight:
+            id: 7kvhhpo3yk266
+        name:
+          type: string
+          x-stoplight:
+            id: jh2q1hkdhzr7e
+    query_addservergroup_body:
+      type: object
+      properties:
+        serverId:
+          type: integer
+          x-stoplight:
+            id: rjk210xzdlfbe
+        sgid:
+          type: integer
+          x-stoplight:
+            id: dixs8w80827rm
+        cldbid:
+          type: integer
+          x-stoplight:
+            id: qu28bb2vtncci
+    query_delservergroup_body:
+      type: object
+      properties:
+        serverId:
+          type: integer
+          x-stoplight:
+            id: s1a5lfodfepnp
+        sgid:
+          type: integer
+          x-stoplight:
+            id: fq2y2vno3q42s
+        cldbid:
+          type: integer
+          x-stoplight:
+            id: 06eb5gavs5wlf
+    query_getonlinelist_body:
+      type: object
+      properties:
+        serverId:
+          type: integer
+          x-stoplight:
+            id: zsb1varw4jca3
+    inline_response_200_4:
+      type: object
+      properties:
+        clid:
+          type: integer
+          x-stoplight:
+            id: amkq7n3hraim1
+        cldbid:
+          type: integer
+          x-stoplight:
+            id: e4hrnm1n5xb9g
+        name:
+          type: string
+          x-stoplight:
+            id: uy85jivjqr4vb
+    query_kickclient_body:
+      type: object
+      properties:
+        serverId:
+          type: integer
+          x-stoplight:
+            id: hhzblnh9x688x
+        clid:
+          type: integer
+          x-stoplight:
+            id: kak7la3a11vcy
+    query_banclient_body:
+      type: object
+      properties:
+        serverId:
+          type: integer
+          x-stoplight:
+            id: luha82elmqk0h
+        clid:
+          type: integer
+          x-stoplight:
+            id: woaq4mj3ljzbv
+        banReason:
+          type: string
+          x-stoplight:
+            id: lj5ee3zz2be7a
+        banTime:
+          type: integer
+          x-stoplight:
+            id: eikyaho1wwc4h
+  responses:
+    CommonAccessDenied:
+      description: Access denied
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: ACCESS_DENIED
+            success: false
+            en: Access denied
+            fa: عدم دسترسی
+    CommonInvalidToken:
+      description: Invalid token or method
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: INVALID_TOKEN
+            success: false
+            en: Invalid token or method
+            fa: توکن معتبر نمیباشد
+    CommonInternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: INTERNAL_SERVER_ERROR
+            success: false
+            en: Internal server error
+            fa: مشکل در سرور بوجود امده است
+    CommonRateLimitExceeded:
+      description: Too many requests
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: RATE_LIMIT_EXCEEDED
+            success: false
+            en: "Too many requests, please try again later"
+            fa: درخواست بیش از حد مجاز، لطفاً بعداً تلاش کنید
+    CommonSocketCooldown:
+      description: Connection rejected due to cooldown period
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: SOCKET_COOLDOWN
+            success: false
+            en: Connection rejected due to cooldown period
+            fa: اتصال به دلیل دوره خنک سازی رد شد
+    CommonSuccess:
+      description: Operation completed successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: SUCCESS
+            success: true
+            en: Success
+            fa: موفقیت آمیز
+    TeamSpeakNotFound:
+      description: Server not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: NOT_FOUND
+            success: false
+            en: Server not found
+            fa: سرور یافت نشد
+    TeamSpeakNotActive:
+      description: Server is suspended
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: NOT_ACTIVE
+            success: false
+            en: Server is suspended
+            fa: سرور تیم اسپیک غیرفعال میباشد
+    TeamSpeakExpired:
+      description: Server is expired
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: EXPIRED
+            success: false
+            en: Server is expired
+            fa: تمدید سرور به اتمام رسیده است
+    TeamSpeakActivated:
+      description: Activated successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: ACTIVATED
+            success: true
+            en: Activated successfully
+            fa: با موفقیت فعال شد
+    TeamSpeakPortNotValid:
+      description: Port in use
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: PORT_NOT_VALID
+            success: false
+            en: Port in use
+            fa: پورت درخواست شده معتبر نمیباشد(در دسترس نمیباشد)
+    TeamSpeakPortCollision:
+      description: Port collision
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: PORT_COLLISION
+            success: false
+            en: Port collision
+            fa: خطای پورت
+    TeamSpeakPackageNotFound:
+      description: Package not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: PACKAGE_NOT_FOUND
+            success: false
+            en: Package not found
+            fa: پکیج پیدا نشد
+    TeamSpeakCompanyNotFound:
+      description: Company not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: COMPANY_NOT_FOUND
+            success: false
+            en: Company not found
+            fa: کمپانی پیدا نشد
+    TeamSpeakExtendUnlimited:
+      description: Package is unlimited
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: EXTEND_UNLIMITED
+            success: false
+            en: Package is unlimited
+            fa: نمیتوان پکیج دائمی را تمدید کرد
+    TeamSpeakCreated:
+      description: Server created successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: CREATED
+            success: true
+            en: Server created succesfully
+            fa: سرور با موفقیت ساخته شد
+    TeamSpeakDeleted:
+      description: Server deleted successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: DELETED
+            success: true
+            en: Server deleted successfully
+            fa: سرور با موفقیت حذف شد
+    TeamSpeakExtended:
+      description: Server extended successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: EXTENDED
+            success: true
+            en: Server extended successfully
+            fa: سرور با موفقیت تمدید شد
+    TeamSpeakStartSuccess:
+      description: Server started successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: SUCCESS
+            success: true
+            en: Server started successfully
+            fa: سرور با موفقیت روشن شد
+    TeamSpeakStartAlreadyRunning:
+      description: Server is already running
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: ALREADY_RUNNING
+            success: false
+            en: Server is already running
+            fa: سرور روشن میباشد
+    TeamSpeakStartUnknown:
+      description: Server start completed with unexpected output
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: UNKNOWN
+            success: false
+            en: Server start completed with unexpected output
+            fa: سرور با نتیجه نامعلوم روشن شده است
+    TeamSpeakRestartSuccess:
+      description: Server restarted successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: SUCCESS
+            success: true
+            en: Server restarted successfully
+            fa: سرور با موفقیت ریستارت شد
+    TeamSpeakRestartUnknown:
+      description: Server restart completed with unexpected output
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: UNKNOWN
+            success: false
+            en: Server restart completed with unexpected output
+            fa: سرور با نتیجه نامعلوم ریستارت شده است
+    TeamSpeakStopSuccess:
+      description: Server stopped successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: SUCCESS
+            success: true
+            en: Server stopped successfully
+            fa: سرور با موفقیت خاموش شد
+    TeamSpeakStopNotRunning:
+      description: Server is not running
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: NOT_RUNNING
+            success: false
+            en: Server is not running
+            fa: سرور خاموش میباشد
+    TeamSpeakStopUnknown:
+      description: Server stop completed with unexpected output
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: UNKNOWN
+            success: false
+            en: Server stop completed with unexpected output
+            fa: سرور با نتیجه نامعلوم خاموش شده است
+    TeamSpeakSnapshotFiveSnapshot:
+      description: Cannot create more than 5 snapshots
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: MORE_THAN_5_SNAPSHOTS
+            success: false
+            en: You can't create more than 5 snapshots
+            fa: شما نمیتوانید بیشتر از ۵ بکاپ بگیرید
+    TeamSpeakSnapshotCreated:
+      description: Snapshot created successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: CREATED
+            success: true
+            en: Snapshot created successfully
+            fa: بکاپ با موفقیت گرفته شد
+    TeamSpeakSnapshotDeployed:
+      description: Snapshot deployed successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: DEPLOYED
+            success: true
+            en: Snapshot deployed successfully
+            fa: بکاپ با موفقیت روی سرور اعمال شد
+    TeamSpeakSnapshotDeleted:
+      description: Snapshot deleted successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: DELETED
+            success: true
+            en: Snapshot deleted successfully
+            fa: بکاپ با موفقیت حذف شد
+    TeamspeakSuspended:
+      description: Server suspended successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: SUSPENDED
+            success: true
+            en: Server suspended successfully
+            fa: سرور با موفقیت غیرفعال شد
+    AudioBotNotFound:
+      description: Bot not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: NOT_FOUND
+            success: false
+            en: Bot not found
+            fa: بات یافت نشد
+    AudioBotActivated:
+      description: Activated successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: ACTIVATED
+            success: true
+            en: Activated successfully
+            fa: با موفقیت فعال شد
+    AudioBotSuspended:
+      description: Suspended successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: SUSPENDED
+            success: true
+            en: Suspended succesfully
+            fa: با موفقیت غیرفعال شد
+    AudioBotPackageNotFound:
+      description: Package not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: PACKAGE_NOT_FOUND
+            success: false
+            en: Package not found
+            fa: پکیج مورد نظر یافت نشد
+    AudioBotConnectSuccess:
+      description: Connected successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: SUCCESS
+            success: true
+            en: Connected successfully
+            fa: با موفقیت کانکت شد
+    AudioBotReconnected:
+      description: Reconnected successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: RECONNECTED
+            success: true
+            en: Reconnected successfully
+            fa: با موفقیت ریکانکت شد
+    AudioBotCreated:
+      description: Bot created successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: CREATED
+            success: true
+            en: Bot created successfully
+            fa: ربات موزیک با موفقیت ساخته شد
+    AudioBotEdited:
+      description: Bot edited successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: EDITED
+            success: true
+            en: Bot edited successfully
+            fa: ربات موزیک با موفقیت ویرایش شد
+    AudioBotDeleted:
+      description: Bot deleted successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: DELETED
+            success: true
+            en: Bot deleted successfully
+            fa: ربات موزیک با موفقیت حذف شد
+    AudioBotDisconnected:
+      description: Bot disconnected successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: DISCONNECTED
+            success: true
+            en: Bot disconnected successfully
+            fa: بات با موفقیت خاموش شد
+    AudioBotExtendUnlimited:
+      description: Package is unlimited
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: EXTEND_UNLIMITED
+            success: false
+            en: Package is unlimited
+            fa: نمیتوان پکیج دائمی را تمدید کرد
+    AudioBotExtended:
+      description: Bot extended successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: EXTENDED
+            success: true
+            en: Bot extended successfully
+            fa: ربات موزیک با موفقیت تمدید شد
+    AudioBotRadioChanged:
+      description: Radio changed successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: RADIO_CHANGED
+            success: true
+            en: Radio changed successfully
+            fa: رادیو با موفقیت تغییر یافت
+    PanelIsOffline:
+      description: Panel is not running
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: IS_OFFLINE
+            success: false
+            en: Panel is not running
+            fa: پنل بات مورد نظر در دسترس نمیباشد
+    PanelNoAvailablePanel:
+      description: No available panel
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: NO_AVAILABLE_PANEL
+            success: false
+            en: There is no available panel
+            fa: پنل در دسترس موجود نمیباشد
+    PanelRefreshed:
+      description: Panels refreshed successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: REFRESHED
+            success: true
+            en: Panels refreshed successfully
+            fa: پنل ها با موفقیت رفرش شدند
+    UserActivated:
+      description: User activated
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: ACTIVATED
+            success: true
+            en: User Activated
+            fa: کاربر با موفقیت فعال شد
+    UserCreated:
+      description: User created
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: CREATED
+            success: true
+            en: User created
+            fa: کاربر با موفقیت ساخته شد
+    UserEdited:
+      description: User edited
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: EDITED
+            success: true
+            en: User edited
+            fa: کاربر با موفقیت ویرایش شد
+    UserDeleted:
+      description: User deleted
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: DELETED
+            success: true
+            en: User deleted
+            fa: کاربر با موفقیت حذف شد
+    UserNotFound:
+      description: User not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: NOT_FOUND
+            success: false
+            en: User not found
+            fa: کاربر با مشخصات وارد شده یافت نشد
+    UserNotValidPassword:
+      description: Incorrect current password
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: NOT_VALID_PASSWORD
+            success: false
+            en: Incorrect current password
+            fa: پسورد فعلی اشتباه میباشد
+    UserNotIdenticalPassword:
+      description: Not identical password
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: NOT_IDENTICAL_PASSWORD
+            success: false
+            en: Not identical password
+            fa: پسورد ها یکسان نمیباشند
+    UserPasswordChanged:
+      description: Password changed
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: PASSWORD_CHANGED
+            success: true
+            en: Password changed
+            fa: پسورد با موفقیت تغییر یافت
+    UserInsufficientBalance:
+      description: Insufficient balance
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: INSUFFICIENT_BALANCE
+            success: false
+            en: Insufficient balance
+            fa: موجودی کافی نیست
+    UserInvalidAuth:
+      description: Invalid authentication
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: INVALID_AUTH
+            success: false
+            en: Username or password is wrong
+            fa: نام کاربری یا رمز عبور اشتباه میباشد
+    UserSuspended:
+      description: User suspended
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: SUSPENDED
+            success: true
+            en: User suspended
+            fa: کاربر با موفقیت غیرفعال شد
+    SettingsCompanyInvalidToken:
+      description: Invalid cloudflare token
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: INVALID_TOKEN
+            success: false
+            en: Invalid cloudflare token
+            fa: توکن کلودفلر معتبر نمیباشد
+    SettingsCompanyDomainNotFound:
+      description: Domain not found with this token
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: DOMAIN_NOT_FOUND
+            success: false
+            en: Domain not found with this token
+            fa: دامنه با توکن ارائه شد یافت نشد
+    SettingsCompanyCreateSuccess:
+      description: Company created successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: CREATE_SUCCESS
+            success: true
+            en: Company created successfully
+            fa: کمپانی با موفقیت ساخته شد
+    SettingsCompanyEditSuccess:
+      description: Company edited successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: EDIT_SUCCESS
+            success: true
+            en: Company edited successfully
+            fa: کمپانی با موفقیت ویرایش شد
+    SettingsCompanyDeleteSuccess:
+      description: Company deleted successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: DELETE_SUCCESS
+            success: true
+            en: Company deleted successfully
+            fa: کمپانی با موفقیت حذف شد
+    SettingsCompanyHasMember:
+      description: Company shouldn't contain any users
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: HAS_MEMBER
+            success: false
+            en: Company shouldn't contain any users
+            fa: نباید کاربری با این کمپانی وجود داشته باشد
+    SettingsCompanyNotFound:
+      description: Company not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: COMPANY_NOT_FOUND
+            success: false
+            en: Company with requested id not found
+            fa: کمپانی با ایدی ارائه شده یافت نشد
+    SettingsManagerPanelCreateSuccess:
+      description: Manager panel added successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: CREATE_SUCCESS
+            success: true
+            en: Manager panel added success
+            fa: پنل منیجر بات با موفقیت اضافه شد
+    SettingsManagerPanelEditSuccess:
+      description: Manager panel edited successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: EDIT_SUCCESS
+            success: true
+            en: Manager panel edited success
+            fa: پنل منیجر بات با موفقیت ویرایش شد
+    SettingsManagerPanelDeleteSuccess:
+      description: Manager panel deleted successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: DELETE_SUCCESS
+            success: true
+            en: Manager panel deleted success
+            fa: پنل منیجر بات با موفقیت حذف شد
+    SettingsManagerPanelNotFound:
+      description: Manager panel not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: PANEL_NOT_FOUND
+            success: false
+            en: Manage panel not found
+            fa: پنل منیجر بات یافت نشد
+    SettingsMusicPanelCreateSuccess:
+      description: Music panel added successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: CREATE_SUCCESS
+            success: true
+            en: Music panel added success
+            fa: پنل موزیک بات با موفقیت اضافه شد
+    SettingsMusicPanelEditSuccess:
+      description: Music panel edited successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: EDIT_SUCCESS
+            success: true
+            en: Music panel edited success
+            fa: پنل موزیک بات با موفقیت ویرایش شد
+    SettingsMusicPanelDeleteSuccess:
+      description: Music panel deleted successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: DELETE_SUCCESS
+            success: true
+            en: Music panel deleted success
+            fa: پنل موزیک بات با موفقیت حذف شد
+    SettingsMusicPanelNotFound:
+      description: Music panel not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: PANEL_NOT_FOUND
+            success: false
+            en: Music panel not found
+            fa: پنل موزیک بات یافت نشد
+    SettingsRadiosAddedSuccess:
+      description: Radio added successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: ADDED_SUCCESS
+            success: true
+            en: Radio added success
+            fa: رادیو با موفقیت اضافه شد
+    SettingsRadiosDeleteSuccess:
+      description: Radio deleted successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: DELETE_SUCCESS
+            success: true
+            en: Radio deleted success
+            fa: رادیو با موفقیت حذف شد
+    SettingsRadiosNotFound:
+      description: Radio not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: NOT_FOUND
+            success: false
+            en: Radio with requested id not found
+            fa: رادیو با ایدی درخواست شده یافت نشد
+    SettingsPackagesNameInUse:
+      description: Package name in use
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: NAME_IN_USE
+            success: false
+            en: Package name in use
+            fa: اسم پکیج در حال استفاده میباشد
+    SettingsPackagesCreateSuccess:
+      description: Package created successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: CREATE_SUCCESS
+            success: true
+            en: Package created success
+            fa: پکیج با موفقیت ساخته شد
+    SettingsPackagesEditSuccess:
+      description: Package edited successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: EDIT_SUCCESS
+            success: true
+            en: Edited success
+            fa: پکیج با موفقیت ویرایش شد
+    SettingsPackagesDeleteSuccess:
+      description: Package deleted successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: DELETE_SUCCESS
+            success: true
+            en: Deleted success
+            fa: پکیج با موفقیت حذف شد
+    SettingsPackagesNotFound:
+      description: Package not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: PACKAGE_NOT_FOUND
+            success: false
+            en: Package with requested id not found
+            fa: پکیج با ایدی درخواست شده یافت نشد
+    ManagerBotCreated:
+      description: Bot created successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: CREATED
+            success: true
+            en: Bot created successfully
+            fa: ربات منیجر با موفقیت ساخته شد
+    ManagerBotDeleted:
+      description: Bot deleted successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: DELETED
+            success: true
+            en: Bot deleted successfully
+            fa: ربات منیجر با موفقیت حذف شد
+    ManagerBotDisconnected:
+      description: Bot disconnected successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: DISCONNECTED
+            success: true
+            en: Bot disconnected successfully
+            fa: ربات منیجر با موفقیت دیسکانکت شد
+    ManagerBotNotFound:
+      description: Bot not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: NOT_FOUND
+            success: false
+            en: Bot with requested id not found
+            fa: بات با ایدی درخواست شده یافت نشد
+    ManagerBotActivated:
+      description: Bot activated successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: ACTIVATED
+            success: true
+            en: Bot activated success
+            fa: ربات منیجر با موفقیت فعال شد
+    ManagerBotExtendUnlimited:
+      description: Package is unlimited
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: EXTEND_UNLIMITED
+            success: false
+            en: Package is unlimited
+            fa: نمیتوان پکیج دائمی را تمدید کرد
+    ManagerBotExtended:
+      description: Bot extended successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: EXTENDED
+            success: true
+            en: Bot extended successfully
+            fa: بات با موفقیت تمدید شد
+    ManagerBotExpired:
+      description: Bot is expired
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: BOT_EXPIRED
+            success: false
+            en: Bot is expired
+            fa: تمدید ربات به اتمام رسیده است
+    ManagerBotTemplateNameInUse:
+      description: Template name is in use
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: TEMPLATE_NAME_IN_USE
+            success: false
+            en: Template name is in use
+            fa: اسم تمپلیت در دسترس نمیباشد
+    ManagerBotNotConnected:
+      description: Bot is not connected
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: NOT_CONNECTED
+            success: false
+            en: Bot is not connected already
+            fa: ربات منیجر متصل نمیباشد
+    ManagerBotConnectConnRefused:
+      description: Bot connection refused
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: CONN_REFUSED
+            success: false
+            en: Bot connection refused
+            fa: ربات به سرور متصل نشد
+    ManagerBotConnectAlreadyConnected:
+      description: Bot already connected
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: ALREADY_CONNECTED
+            success: false
+            en: Bot already connected
+            fa: ربات متصل میباشد
+    ManagerBotConnectSuccess:
+      description: Bot connected successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: SUCCESS
+            success: true
+            en: Bot connected success
+            fa: ربات منیجر با موفقیت کانکت شد
+    ManagerBotReconnectConnRefused:
+      description: Bot connection refused
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: CONN_REFUSED
+            success: false
+            en: Bot connection refused
+            fa: ربات به سرور متصل نشد
+    ManagerBotReconnectSuccess:
+      description: Bot reconnected successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: SUCCESS
+            success: true
+            en: Bot connected success
+            fa: ربات منیجر با موفقیت ریکانکت شد
+    ManagerBotSuspended:
+      description: Bot suspended successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: SUSPENDED
+            success: true
+            en: Bot suspended success
+            fa: ربات منیجر با موفقیت غیرفعال شد
+  securitySchemes:
+    X-API-KEY:
+      type: apiKey
+      name: <YOUR-API-KEY>
+      in: header
