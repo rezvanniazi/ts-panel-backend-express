@@ -1,6 +1,13 @@
 const express = require("express")
 const router = express.Router()
-const { getLogTypes, getLogFiles, readLogFile, getLogStats, clearLogFile, searchLogs } = require("../handlers/api/logs")
+const {
+    getLogTypes,
+    getLogFiles,
+    readLogFile,
+    getLogStats,
+    clearLogFile,
+    searchLogs,
+} = require("../handlers/api/logsHandler")
 
 // Get list of available log types
 router.get("/types", getLogTypes)
