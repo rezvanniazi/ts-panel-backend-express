@@ -85,7 +85,7 @@ const rateLimiters = {
     // Strict rate limiter for authentication endpoints
     auth: createRateLimiter({
         windowMs: 15 * 60 * 1000, // 15 minutes
-        maxRequests: 5,
+        maxRequests: 10,
         keyGenerator: (req) => {
             const ip = req.ip || req.connection?.remoteAddress || "unknown"
             return `auth_rate_limit:${ip}`

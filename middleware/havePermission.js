@@ -14,7 +14,7 @@ module.exports = {
         }
     },
     canUseManagerBots: (req, res, next) => {
-        if (req.user.scope === "reseller" && !req.user.canUseManagerBots) {
+        if (req.user.scope === "reseller" && !req.user.canUseManagerBot) {
             return res.status(403).json({ message: "Access Denied" })
         } else {
             next()

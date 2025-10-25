@@ -230,8 +230,14 @@ class AudiobotService {
         return botList
     }
 
-    async getBotPackageList() {
-        const botPackgeList = await BotPackages.findAll({ raw: true })
+    async getBotPackageList(user) {
+        let botPackgeList
+
+        if (user.scope === "admin") {
+            botPackgeList = await BotPackages.findAll({ raw: true })
+        } else {
+            botPackgeList = await BotPackages.findAll({ where: { package_for_admin: false }, raw: true })
+        }
         return botPackgeList
     }
     async getBotPanelList() {

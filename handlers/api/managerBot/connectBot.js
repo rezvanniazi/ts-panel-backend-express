@@ -40,9 +40,11 @@ module.exports = async (req, res) => {
             if (errorCode == "NOT_FOUND") {
                 await panel.createBot(createTemplate(bot.template_name, bot.channels, bot.conn))
             } else if (errorCode == "CONNECT_FAILED") {
+                botLogger.error(`بات به دلیل ${errorCode} به سرور متصل نشده درخواست شده توسط ${username}`)
                 bot.status = "offline"
                 return res.status(apiCodes.BAD_REQUEST).json(responses.MANAGER_BOT.CONNECT.CONN_REFUSED)
             } else if (errorCode == "ALREADY_CONNECTED") {
+                botLogger.error(`درخواست کانکت با شکست مواجه شد به دلیل متصل میباشد درخواست شده توسط ${username}`)
                 bot.status = "online"
                 return res.status(apiCodes.ALREADY_RUNNING).json(responses.MANAGER_BOT.CONNECT.ALREADY_CONNECTED)
             } else {

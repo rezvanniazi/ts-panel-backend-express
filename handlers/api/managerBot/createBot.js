@@ -51,9 +51,13 @@ module.exports = async (req, res) => {
             panel = await ManagerBotPanels.findByPk(panelId)
         } else {
             // Fetch panels from db and get the first panel that in use count is less then max_bot and is online
-            panel = (await ManagerBotPanels.findAll()).find(
-                (p) => p.in_use_count < p.max_bot && p.status == "online"
-            )[0]
+            const panelList = await ManagerBotPanels.findAll({ raw: true })
+
+            const onlinePanels = panelList.filter(
+                (p) => managerBotApis.ManagerBotPanel.getPanel(p.id)?.socket?.connected
+            )
+
+            panel = onlinePanels.find((p) => p.in_use_count < p.max_bot)
         }
         if (!panel) {
             userLogger.error(`هیچ پنل در دسترسی برای ${user.username} پیدا نشد`)

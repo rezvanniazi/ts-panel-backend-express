@@ -6,7 +6,7 @@ const Servers = require("../../../models/Servers")
 const TsManagerBots = require("../../../models/TsManagerBots")
 const { createLogger } = require("../../../utils/logger")
 
-const RESLLER_LOG_TYPES = ["managerBots", "teamspeak", "audioBots"]
+const RESELLER_LOG_TYPES = ["managerBot", "teamspeak", "audiobot"]
 const LOGS_FOLDER_PATH = path.join(process.cwd(), "logs")
 const logHelper = require("../../../lib/utils/logHelper")
 
@@ -32,19 +32,46 @@ class LogsService {
         }
 
         let tree = []
-        let logsFolders = userInfo.scope === "admin" ? await fs.readdir(LOGS_FOLDER_PATH) : RESLLER_LOG_TYPES
 
-        for (let folder of logsFolders) {
-            // Read log file list from every folders
-            const result = await fs.readdir(path.join(LOGS_FOLDER_PATH, folder))
-            const children = result.map((file) => ({
-                title: file,
-                key: `${folder}-${file.split(".")[0]}`,
-                isLeaf: true,
-            }))
+        if (userInfo.scope === "admin") {
+            let logsFolders = await fs.readdir(LOGS_FOLDER_PATH)
 
-            tree.push({ title: folder, children: children })
+            for (let folder of logsFolders) {
+                // Read log file list from every folders
+                const result = await fs.readdir(path.join(LOGS_FOLDER_PATH, folder))
+                const children = result.map((file) => ({
+                    title: file,
+                    key: `${folder}-${file.split(".")[0]}`,
+                    isLeaf: true,
+                }))
+
+                tree.push({ title: folder, children: children })
+            }
+        } else {
+            let logsFolders = RESELLER_LOG_TYPES
+
+            for (let folder of logsFolders) {
+                let result = await fs.readdir(path.join(LOGS_FOLDER_PATH, folder))
+
+                if (folder == "audiobot") {
+                    result = result.filter((file) => userInfo.ownedAudioBots.includes(file.split(".")[0]))
+                } else if (folder == "teamspeak") {
+                    result = result.filter((file) => userInfo.ownedTeamspeaks.includes(file.split(".")[0]))
+                } else if (folder == "managerBot") {
+                    result = result.filter((file) => userInfo.ownedManagerBots.includes(file.split(".")[0]))
+                } else {
+                    continue
+                }
+
+                const children = result.map((file) => ({
+                    title: file,
+                    key: `${folder}-${file.split(".")[0]}`,
+                    isLeaf: true,
+                }))
+                tree.push({ title: folder, children: children })
+            }
         }
+
         socket.emit("logFilesTree", tree)
     }
 
@@ -114,7 +141,7 @@ class LogsService {
                 attributes: ["id"],
                 raw: true,
             })
-        ).map((item) => item.id)
+        ).map((item) => item.id.toString())
 
         userInfo.ownedManagerBots = (
             await TsManagerBots.findAll({
@@ -122,13 +149,15 @@ class LogsService {
                 attributes: ["id"],
                 raw: true,
             })
-        ).map((item) => item.id)
+        ).map((item) => item.id.toString())
 
-        userInfo.ownedTeamspeaks = Servers.findAll({
-            where: { author: username },
-            raw: true,
-            attributes: ["id"],
-        })
+        userInfo.ownedTeamspeaks = (
+            await Servers.findAll({
+                where: { author: username },
+                raw: true,
+                attributes: ["id"],
+            })
+        ).map((item) => item.id.toString())
 
         this.usersInfo.set(userId, userInfo)
 

@@ -37,7 +37,7 @@ module.exports = async (req, res) => {
 
             if (errorCode == "NOT_FOUND") {
                 await panel.createBot(createTemplate(bot.template_name, bot.channels, bot.conn))
-            } else if (errorCode == "ECONNREFUSED") {
+            } else if (errorCode == "CONNECT_FAILED") {
                 return res.status(apiCodes.BAD_REQUEST).json(responses.MANAGER_BOT.RECONNECT.CONN_REFUSED)
             } else {
                 throw err

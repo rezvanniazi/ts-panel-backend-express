@@ -9,7 +9,7 @@ module.exports = {
         botServerIp: Joi.string().required(),
         botDefaultChannelName: Joi.string().empty("").optional(),
         botPackageName: Joi.string().required(),
-        panelId: Joi.number().integer().optional().empty(""),
+        panelId: Joi.number().integer().empty(null).optional(),
         information: Joi.string().optional().empty(""),
         autorenew: Joi.bool().default(false).optional(),
     }).required(),
@@ -27,7 +27,7 @@ module.exports = {
         botServerIp: Joi.string().empty("").optional(),
         botDefaultChannelName: Joi.string().empty("").optional(),
         information: Joi.string().empty("").optional(),
-        panelId: Joi.number().integer().empty("").optional(),
+        panelId: Joi.number().integer().empty(null).optional(),
         autorenew: Joi.bool().empty("").optional(),
     }).required(),
     delete: Joi.object({
@@ -40,7 +40,7 @@ module.exports = {
         botId: Joi.number().integer().required(),
     }).required(),
     connectBulk: Joi.object({
-        selecteds: Joi.array().items(Joi.number().integer().required()).optional().empty(""),
+        selecteds: Joi.array().items(Joi.number().integer().optional()).empty("").optional(),
     })
         .optional()
         .empty(""),

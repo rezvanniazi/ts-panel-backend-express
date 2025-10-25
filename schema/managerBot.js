@@ -10,7 +10,7 @@ module.exports = {
     }).required(),
 
     connectBulk: Joi.object({
-        selecteds: Joi.array().items(Joi.number().integer()).required(),
+        selecteds: Joi.array().items(Joi.number().integer()).optional(),
     }),
 
     create: Joi.object({
@@ -18,7 +18,7 @@ module.exports = {
         selectedPerms: Joi.object().required(),
         conn: Joi.object().required(),
         channels: Joi.object().required(),
-        panelId: Joi.number().integer().allow(null),
+        panelId: Joi.number().integer().empty(null).optional(),
         autorenew: Joi.bool().default(false),
     }),
 
@@ -31,7 +31,7 @@ module.exports = {
     }).required(),
 
     disconnectBulk: Joi.object({
-        selecteds: Joi.array().items(Joi.number().integer()).required(),
+        selecteds: Joi.array().items(Joi.number().integer()).optional(),
     }),
 
     edit: Joi.object({
@@ -39,7 +39,7 @@ module.exports = {
         selectedPerms: Joi.object().required(),
         conn: Joi.object().required(),
         channels: Joi.object().required(),
-        panelId: Joi.number().integer().allow(null),
+        panelId: Joi.number().integer().allow(null).empty(null).optional(),
         autorenew: Joi.bool().optional().default(null),
     }).required(),
 
@@ -52,7 +52,7 @@ module.exports = {
     }).required(),
 
     reconnectBulk: Joi.object({
-        selecteds: Joi.array().items(Joi.number().integer()).required(),
+        selecteds: Joi.array().items(Joi.number().integer()).optional(),
     }),
 
     suspend: Joi.object({

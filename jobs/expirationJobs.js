@@ -14,6 +14,7 @@ const TsManagerBots = require("../models/TsManagerBots")
 const ManagerBotPanels = require("../models/ManagerBotPanels")
 const calculatePermissions = require("../lib/utils/calculatePermissions")
 const AudioBots = require("../models/AudioBots")
+const Permissions = require("../models/Permissions")
 
 class ExpirationJobs {
     constructor() {
@@ -145,7 +146,8 @@ class ExpirationJobs {
             }
 
             const author = await Users.findOne({ where: { username: bot.author } })
-            const permissions = await Permissions.findAll()
+            const permissions = await Permissions.findAll({ raw: true })
+
             if (!permissions || !author) {
                 throw new Error("Permissions or author not found")
             }
