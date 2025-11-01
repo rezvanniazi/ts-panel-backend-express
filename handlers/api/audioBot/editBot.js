@@ -83,7 +83,9 @@ module.exports = async (req, res) => {
             })
         }
         bot.bot_channel_commander_is_on = botChannelCommanderIsOn
-        await audioBotHelper.connect({ templateName: bot.template_name, panel: currentPanel })
+        if (bot.state == "active") {
+            await audioBotHelper.connect({ templateName: bot.template_name, panel: currentPanel })
+        }
         /////////////////////////////////////////
         if (information) {
             bot.information = information

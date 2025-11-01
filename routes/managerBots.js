@@ -18,6 +18,7 @@ const handlers = {
     reconnectBulk: require("../handlers/api/managerBot/reconnectBulk"),
     suspend: require("../handlers/api/managerBot/suspendBot"),
     fetchConnectionData: require("../handlers/api/managerBot/fetchConnectionData"),
+    toggleAutoRenew: require("../handlers/api/managerBot/toggleAutoRenew"),
 }
 
 router.post("/activate", validate(schema.activate), handlers.activate)
@@ -33,6 +34,7 @@ router.post("/reconnect", validate(schema.reconnect), handlers.reconnect)
 router.post("/reconnect-bulk", validate(schema.reconnectBulk), handlers.reconnectBulk)
 router.post("/suspend", validate(schema.suspend), handlers.suspend)
 router.post("/fetch-connection-data", validate(schema.fetchConnectionData), handlers.fetchConnectionData)
+router.post("/toggle-autorenew", validate(schema.toggleAutoRenew), handlers.toggleAutoRenew)
 
 router.get("/get-bot-list", handlers.getBotList)
 

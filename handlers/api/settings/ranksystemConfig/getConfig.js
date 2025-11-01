@@ -4,7 +4,7 @@ const RanksystemSettings = require("../../../../models/RanksystemSettings")
 
 module.exports = async (req, res) => {
     try {
-        const settings = await RanksystemSettings.findOne()
+        const settings = await RanksystemSettings.findOne({ raw: true })
 
         const response = {
             price: settings?.price,
@@ -14,6 +14,8 @@ module.exports = async (req, res) => {
                 token: settings?.backend_token,
             },
         }
+
+        console.log(response)
 
         return res.status(apiCodes.SUCCESS).json(response)
     } catch (err) {

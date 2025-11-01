@@ -3,6 +3,7 @@ const TeamspeakController = require("../../handlers/socket/teamspeak/TeamspeakCo
 const UserController = require("../../handlers/socket/user/UserController")
 const ManagerbotController = require("../../handlers/socket/managerbot/ManagerbotController")
 const LogsController = require("../../handlers/socket/logsService/LogsController")
+const RanksystemController = require("../../handlers/socket/ranksystem/RanksystemController")
 
 class SocketService {
     constructor(io) {
@@ -11,6 +12,8 @@ class SocketService {
         this.audiobotService = AudiobotController(io)
         this.userService = UserController(io)
         this.managerbotService = ManagerbotController(io)
+        this.ranksystemService = RanksystemController(io)
+
         this.logsService = LogsController(io)
         this.activeUsers = new Map()
         this.initializeServices()
@@ -35,6 +38,9 @@ class SocketService {
             }
             if (user?.canUseManagerBot || user?.scope == "admin") {
                 this.managerbotService.addUser(user.id, socket)
+            }
+            if (user?.canUseRanksystems || user?.scope == "admin") {
+                this.ranksystemService.addUser(user.id, socket)
             }
             if (user?.scope == "admin") {
                 socket.join("admin")

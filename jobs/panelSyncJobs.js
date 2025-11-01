@@ -9,6 +9,9 @@ const audioBotHelper = require("../lib/audioBot/audioBotHelper")
 const managerBotApis = require("../lib/managerBot/ManagerBotPanel")
 const MusicBotPanels = require("../models/MusicBotPanels")
 const AudioBots = require("../models/AudioBots")
+const Ranksystems = require("../models/Ranksystems")
+const RanksystemSettings = require("../models/RanksystemSettings")
+const { RanksystemPanel } = require("../lib/ranksystem/RanksystemPanel")
 
 class PanelSyncJobs {
     constructor() {
@@ -28,6 +31,7 @@ class PanelSyncJobs {
 
             await this.checkAudiobotPanels()
             await this.checkManagerbotPanels()
+            await this.checkRanksystemPanels()
         }
 
         cron.schedule(cronConfig.panelSyncCheck, job)
@@ -126,6 +130,31 @@ class PanelSyncJobs {
                 })
             })
         )
+    }
+
+    async checkRanksystemPanels() {
+        const bots = await Ranksystems.findAll()
+
+        const panelInstance = RanksystemPanel.getPanel()
+
+        try {
+            const { data: panelBotList } = await panelInstance.getBotList()
+            for (let botInPanel of panelBotList) {
+                const botInDb = bots.find((b) => b.template_name === botInPanel.templateName)
+                if (botInDb) {
+                    botInDb.status = botInPanel.status
+                    await botInDb.save()
+                }
+            }
+        } catch (err) {
+            if (err.error === "SOCKET_NOT_CONNECTED") {
+                this.logger.error(`Ranksystem Panel ${panelInstance.address} is offline`)
+            } else {
+                console.log(err)
+            }
+
+            bots.forEach(async (b) => b.update({ status: "offline" }))
+        }
     }
 }
 

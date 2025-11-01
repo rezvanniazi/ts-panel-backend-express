@@ -2,6 +2,21 @@ const logHelper = require("../../../lib/utils/logHelper")
 const responses = require("../../../constants/responses")
 const apiCodes = require("../../../constants/apiCodes")
 const { createLogger } = require("../../../utils/logger")
+const TsManagerBots = require("../../../models/TsManagerBots")
+const { ManagerBotPanel } = require("../../../lib/managerBot/ManagerBotPanel")
+
+const sortManagerBotLogs = (logs1, logs2) => {
+    const combinedLogs = logs1 + "\n" + logs2
+    const logs = combinedLogs.split("\n").filter((line) => line.trim() !== "")
+
+    return logs
+        .sort((a, b) => {
+            const dateA = new Date(a.substring(0, 10).replace(/\//g, "-") + " " + a.substring(11, 19))
+            const dateB = new Date(b.substring(0, 10).replace(/\//g, "-") + " " + b.substring(11, 19))
+            return dateA - dateB
+        })
+        .join("\n")
+}
 
 /**
  * Get list of available log types and files
@@ -99,11 +114,25 @@ const readLogFile = async (req, res) => {
 
         const logData = await logHelper.readLogFile(logType, fileName, options)
 
+        let finalLog = logData
+
+        if (logType == "managerBot") {
+            const bot = await TsManagerBots.findByPk(fileName, { raw: true })
+            if (bot) {
+                const panel = ManagerBotPanel.getPanel(bot.panel_id)
+                if (panel && panel?.socket?.connected) {
+                    const botLogs = await panel.getBotLogs({ templateName: bot.template_name })
+
+                    finalLog = sortManagerBotLogs(logData.content, botLogs.data.logs.content)
+                }
+            }
+        }
+
         userLogger.info(`User ${req.user.username} read log file: ${logType}/${fileName}`)
 
         return res.status(apiCodes.SUCCESS).json({
             ...responses.LOGS.LOGS_FETCHED,
-            data: logData,
+            data: finalLog,
         })
     } catch (error) {
         if (error.message === "File not found") {

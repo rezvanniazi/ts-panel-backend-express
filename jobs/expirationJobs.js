@@ -17,6 +17,9 @@ const AudioBots = require("../models/AudioBots")
 const Permissions = require("../models/Permissions")
 const BotPackages = require("../models/BotPackages")
 const MusicBotPanels = require("../models/MusicBotPanels")
+const RanksystemSettings = require("../models/RanksystemSettings")
+const Ranksystems = require("../models/Ranksystems")
+const { RanksystemPanel } = require("../lib/ranksystem/RanksystemPanel")
 
 class ExpirationJobs {
     constructor() {
@@ -36,6 +39,7 @@ class ExpirationJobs {
             await this.checkTeamspeakExpirations()
             await this.checkAudiobotExpirations()
             await this.checkManagerBotExpirations()
+            await this.checkRanksystemExpirations()
         }
         cron.schedule(cronConfig.expirationCheck, job)
 
@@ -196,6 +200,54 @@ class ExpirationJobs {
                     b.state = "suspended"
                     b.status = "offline"
                     await b.save()
+                }
+            })
+        )
+    }
+    async checkRanksystemExpirations() {
+        async function renew(bot) {
+            return new Promise(async (resolve, reject) => {
+                if (!bot.autorenew) {
+                    return reject()
+                }
+
+                const author = await Users.findOne({ where: { username: bot.author } })
+                const settings = await RanksystemSettings.findOne()
+                if (!settings || !author) {
+                    throw new Error("Settings or author not found")
+                }
+
+                await author.subtractBalance(settings.price)
+
+                const expires = new Date()
+                expires.setDate(expires.getDate() + 30)
+
+                await bot.update({ expires })
+                return resolve()
+            })
+        }
+
+        const bots = await Ranksystems.findAll({
+            where: {
+                expires: {
+                    // Lower then current date
+                    [Op.lt]: new Date(),
+                },
+                state: "active",
+            },
+        })
+        await Promise.all(
+            bots.map(async (b) => {
+                try {
+                    await renew(b)
+                } catch (err) {
+                    const panel = RanksystemPanel.getPanel()
+
+                    if (panel && panel?.socket?.connected) {
+                        await panel.suspendBot({ templateName: b.template_name }).catch(() => {})
+
+                        await b.update({ state: "suspended", status: "offline" })
+                    }
                 }
             })
         )

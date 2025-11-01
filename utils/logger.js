@@ -13,6 +13,7 @@ const allowedServices = new Set([
     "expirationJobs",
     "teamspeakJobs",
     "managerPanel",
+    "ranksystemPanel",
     "musicPanel",
     "permission",
     "radio",

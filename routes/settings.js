@@ -44,8 +44,8 @@ const handlers = {
         getAll: require("../handlers/api/settings/radio/getRadioList"),
     },
     ranksystemConfig: {
-        get: require("../handlers/api/settings/ranksystemConfig/getConfig.js"),
-        update: require("../handlers/api/settings/ranksystemConfig/updateConfig.js"),
+        get: require("../handlers/api/settings/ranksystemConfig/getConfig"),
+        update: require("../handlers/api/settings/ranksystemConfig/updateConfig"),
     },
     serverPacages: {
         create: require("../handlers/api/settings/serverPackages/serverPackages").create,

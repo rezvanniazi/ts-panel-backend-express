@@ -639,6 +639,14 @@ module.exports = {
                 fa: "نام کاربری یا پسورد اشتباه میباشد",
             },
         },
+        TOGGLE_AUTORENEW: {
+            SUCCESS: {
+                code: "TOGGLE_AUTORENEW_SUCCESS",
+                success: true,
+                en: "Auto renew toggled successfully",
+                fa: "تنظیمات تمدید خودکار با موفقیت تغییر کرد",
+            },
+        },
     },
     LOGS: {
         LOGS_FETCHED: {
@@ -670,6 +678,86 @@ module.exports = {
             success: true,
             en: "Log file cleared successfully",
             fa: "فایل لاگ با موفقیت پاک شد",
+        },
+    },
+    RANKSYSTEM: {
+        NOT_FOUND: {
+            code: "NOT_FOUND",
+            success: false,
+            en: "Ranksystem not found",
+            fa: "رنک سیستم یافت نشد",
+        },
+        CREATED: {
+            code: "CREATED",
+            success: true,
+            en: "Ranksystem created successfully",
+            fa: "رنک سیستم با موفقیت ایجاد شد",
+        },
+        UPDATED: {
+            code: "UPDATED",
+            success: true,
+            en: "Ranksystem updated successfully",
+            fa: "رنک سیستم با موفقیت به‌روزرسانی شد",
+        },
+        EXTENDED: {
+            code: "EXTENDED",
+            success: true,
+            en: "Ranksystem extended successfully",
+            fa: "رنک سیستم با موفقیت تمدید شد",
+        },
+        DELETED: {
+            code: "DELETED",
+            success: true,
+            en: "Ranksystem deleted successfully",
+            fa: "رنک سیستم با موفقیت حذف شد",
+        },
+        SUSPENDED: {
+            code: "SUSPENDED",
+            success: true,
+            en: "Ranksystem suspended successfully",
+            fa: "رنک سیستم با موفقیت غیرفعال شد",
+        },
+        CONNECTED: {
+            code: "CONNECTED",
+            success: true,
+            en: "Ranksystem connected successfully",
+            fa: "رنک سیستم با موفقیت متصل شد",
+        },
+        DISCONNECTED: {
+            code: "DISCONNECTED",
+            success: true,
+            en: "Ranksystem disconnected successfully",
+            fa: "رنک سیستم با موفقیت قطع شد",
+        },
+        RECONNECTED: {
+            code: "RECONNECTED",
+            success: true,
+            en: "Ranksystem reconnected successfully",
+            fa: "رنک سیستم با موفقیت دوباره متصل شد",
+        },
+        ACTIVATED: {
+            code: "ACTIVATED",
+            success: true,
+            en: "Ranksystem activated successfully",
+            fa: "رنک سیستم با موفقیت فعال شد",
+        },
+        CONNECTION_FAILED: {
+            code: "CONNECTION_FAILED",
+            success: false,
+            en: "Ranksystem connection failed",
+            fa: "اتصال به رنک سیستم ناموفق بود",
+        },
+        INVALID_SETTINGS: {
+            code: "INVALID_SETTINGS",
+            success: false,
+            en: "Invalid ranksystem settings",
+            fa: "تنظیمات رنک سیستم نامعتبر است",
+        },
+        TEMPLATE_NAME_NOT_VALID: {
+            code: "TEMPLATE_NAME_NOT_VALID",
+            success: false,
+            en: "Template name is not valid",
+            fa: "اسم تمپلیت معتبر نمیباشد",
         },
     },
 }

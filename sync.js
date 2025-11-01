@@ -15,6 +15,6 @@ const Users = require("./models/Users")
 const RefreshTokens = require("./models/RefreshTokens")
 const Tokens = require("./models/Tokens")
 
-sequelize.sync().then(() => {
+sequelize.sync({ alter: true }).then(() => {
     console.log("Database synced!")
 })

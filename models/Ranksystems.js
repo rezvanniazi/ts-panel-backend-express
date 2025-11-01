@@ -14,6 +14,16 @@ const Ranksystems = sequelize.define(
             type: DataTypes.STRING(45),
             allowNull: false,
         },
+        state: {
+            type: DataTypes.STRING(45),
+            allowNull: false,
+            defaultValue: "active",
+        },
+        status: {
+            type: DataTypes.STRING(45),
+            allowNull: false,
+            defaultValue: "offline",
+        },
         expires: {
             type: DataTypes.DATEONLY,
             allowNull: true,
@@ -32,6 +42,10 @@ const Ranksystems = sequelize.define(
             allowNull: false,
             // Consider adding encryption in hooks
         },
+        information: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
         created: {
             type: DataTypes.DATE,
             allowNull: false,
@@ -43,6 +57,26 @@ const Ranksystems = sequelize.define(
         },
     },
     {
+        hooks: {
+            afterCreate: (bot) => {
+                const svc = global.ranksystemService
+                if (svc) {
+                    svc.tableChanges.create(bot)
+                }
+            },
+            afterUpdate: (bot) => {
+                const svc = global.ranksystemService
+                if (svc) {
+                    svc.tableChanges.update(bot)
+                }
+            },
+            afterDestroy: (bot) => {
+                const svc = global.ranksystemService
+                if (svc) {
+                    svc.tableChanges.delete(bot)
+                }
+            },
+        },
         timestamps: false, // Since we have our own created field
     }
 )

@@ -15,6 +15,9 @@ const ManagerbotController = require("./handlers/socket/managerbot/ManagerbotCon
 const JobManager = require("./jobs")
 const ManagerBotPanels = require("./models/ManagerBotPanels")
 const { ManagerBotPanel } = require("./lib/managerBot/ManagerBotPanel")
+const RanksystemController = require("./handlers/socket/ranksystem/RanksystemController")
+const RanksystemSettings = require("./models/RanksystemSettings")
+const { RanksystemPanel } = require("./lib/ranksystem/RanksystemPanel")
 
 class SocketServer {
     constructor() {
@@ -38,9 +41,10 @@ class SocketServer {
                 skipMiddlewares: true,
             },
         })
+        this.initializeManagerBotPanels()
+        this.initializeRanksystemPanel()
         this.initializeMiddlewares()
         this.initializeControllers()
-        this.initializeManagerBotPanels()
         this.initializeCronjobs()
         this.initializeErrorHandling()
     }
@@ -71,12 +75,14 @@ class SocketServer {
         this.audiobotService = AudiobotController(this.io)
         this.userService = UserController(this.io)
         this.managerbotService = ManagerbotController(this.io)
+        this.ranksystemService = RanksystemController(this.io)
         // Make socket service globally accessible
         global.socketService = this.socketService
         global.teamspeakService = this.teamspeakService
         global.audiobotService = this.audiobotService
         global.userService = this.userService
         global.managerbotService = this.managerbotService
+        global.ranksystemService = this.ranksystemService
     }
 
     async initializeManagerBotPanels() {
@@ -84,6 +90,12 @@ class SocketServer {
         panels.forEach((p) => {
             new ManagerBotPanel(p)
         })
+    }
+    async initializeRanksystemPanel() {
+        const settings = await RanksystemSettings.findOne({ raw: true })
+        if (settings) {
+            new RanksystemPanel({ host: settings.backend_url, token: settings.backend_token })
+        }
     }
 
     initializeErrorHandling() {

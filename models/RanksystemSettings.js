@@ -21,9 +21,6 @@ const RanksystemSettings = sequelize.define(
         backend_url: {
             type: DataTypes.STRING(45),
             allowNull: false,
-            validate: {
-                isUrl: true, // Validate URL format
-            },
         },
         backend_token: {
             type: DataTypes.STRING(45),

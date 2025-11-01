@@ -66,4 +66,8 @@ module.exports = {
         queryPort: Joi.number().integer().required(),
         serverPort: Joi.number().integer().required(),
     }).required(),
+    toggleAutoRenew: Joi.object({
+        botId: Joi.number().integer().required(),
+        autorenew: Joi.bool().required(),
+    }).required(),
 }

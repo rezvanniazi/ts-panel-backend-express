@@ -13,6 +13,9 @@ const extendServer = async (req, res) => {
     const server = await Servers.findByPk(serverId)
     const user = await Users.findByPk(req.user.id)
 
+    const serverLogger = createLogger("teamspeak", serverId)
+    const userLogger = createLogger("user", req.user.id)
+
     if (!server) {
         return res.status(apiCodes.NOT_FOUND).json(responses.TEAMSPEAK.NOT_FOUND)
     }
@@ -29,8 +32,16 @@ const extendServer = async (req, res) => {
         return res.status(apiCodes.UNLIMIT_PACKAGE_EXTEND).json(responses.TEAMSPEAK.EXTEND_UNLIMITED)
     }
 
-    const serverLogger = createLogger("teamspeak", serverId)
-    const userLogger = createLogger("user", req.user.id)
+    try {
+        await user.subtractBalance(package.package_amount, transaction)
+        userLogger.info(`مقدار ${package.package_amount} از حساب کاربر بابت تمدید سرور کسر شد`)
+
+        await transaction.commit()
+    } catch (err) {
+        console.log(err)
+        await transaction.rollback()
+        return res.status(apiCodes.INTERNAL_SERVER_ERROR).json(responses.USER.INSUFFICIENT_BALANCE)
+    }
 
     if (server.expires) {
         const today = new Date()
@@ -43,17 +54,7 @@ const extendServer = async (req, res) => {
         serverLogger.info(`${package.package_days} روز به سرور توسط ${req.user.username} اضافه شد`)
 
         server.expires = expires
-        await server.save({ transaction })
-    }
-    try {
-        await user.subtractBalance(package.package_amount, transaction)
-        userLogger.info(`مقدار ${package.package_amount} از حساب کاربر بابت تمدید سرور کسر شد`)
-
-        await transaction.commit()
-    } catch (err) {
-        console.log(err)
-        await transaction.rollback()
-        return res.status(apiCodes.INTERNAL_SERVER_ERROR).json(responses.COMMON.INTERNAL_SERVER_ERROR)
+        await server.save()
     }
 
     return res.status(apiCodes.SUCCESS).json(responses.TEAMSPEAK.EXTENDED)

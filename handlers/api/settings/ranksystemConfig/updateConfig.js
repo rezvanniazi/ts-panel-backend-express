@@ -14,15 +14,16 @@ module.exports = async (req, res) => {
         }
 
         const oldSettings = await RanksystemSettings.findOne()
+
         if (oldSettings) {
-            oldSettings.update(data)
+            await oldSettings.update(data)
         } else {
-            RanksystemSettings.create(data)
+            await RanksystemSettings.create(data)
         }
 
         return res.status(apiCodes.SUCCESS).json(responses.COMMON.SUCCESS)
     } catch (err) {
-        console.error("Error updating ranksystem config: ")
+        console.error("Error updating ranksystem config: ", err)
 
         return res.status(apiCodes.INTERNAL_SERVER_ERROR).json(responses.COMMON.INTERNAL_SERVER_ERROR)
     }

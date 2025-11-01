@@ -7,9 +7,9 @@ const responses = require("../../../constants/responses")
 const { createLogger } = require("../../../utils/logger")
 
 module.exports = async (req, res) => {
-    try {
-        const transaction = await sequelize.transaction()
+    const transaction = await sequelize.transaction()
 
+    try {
         const { botId } = req.body
 
         const bot = await AudioBots.findByPk(botId)
