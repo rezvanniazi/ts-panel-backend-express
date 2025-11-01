@@ -107,4 +107,8 @@ const AudioBots = sequelize.define(
     }
 )
 
+AudioBots.prototype.isExpired = function () {
+    return this.expires && new Date(this.expires) < new Date()
+}
+
 module.exports = AudioBots

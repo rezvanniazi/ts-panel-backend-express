@@ -1,3 +1,5 @@
+const { EXPIRED } = require("./apiCodes")
+
 module.exports = {
     COMMON: {
         ACCESS_DENIED: {
@@ -281,6 +283,12 @@ module.exports = {
             success: true,
             en: "Radio changed successfully",
             fa: "رادیو با موفقیت تغییر یافت",
+        },
+        EXPIRED: {
+            code: "EXPIRED",
+            success: false,
+            en: "Bot is expired",
+            fa: "تمدید ربات به اتمام رسیده است",
         },
     },
     PANEL: {
@@ -758,6 +766,18 @@ module.exports = {
             success: false,
             en: "Template name is not valid",
             fa: "اسم تمپلیت معتبر نمیباشد",
+        },
+        EXPIRED: {
+            code: "EXPIRED",
+            success: false,
+            en: "Ranksystem is expired",
+            fa: "تمدید رنک سیستم به اتمام رسیده است",
+        },
+        IS_SUSPENDED: {
+            code: "IS_SUSPENDED",
+            success: false,
+            en: "Ranksystem is suspended",
+            fa: "رنک سیستم غیرفعال میباشد",
         },
     },
 }

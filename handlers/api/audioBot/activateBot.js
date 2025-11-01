@@ -20,6 +20,9 @@ module.exports = async (req, res) => {
         if (bot.bot_owner !== username && scope !== "admin") {
             return res.status(apiCodes.FORBIDDEN).json(responses.COMMON.ACCESS_DENIED)
         }
+        if (bot.isExpired()) {
+            return res.status(apiCodes.FORBIDDEN).json(responses.AUDIO_BOT.EXPIRED)
+        }
 
         if (panel && panel.status === "online") {
             await audioBotHelper.connect({ templateName: bot.template_name, panel, playing: bot.playing })

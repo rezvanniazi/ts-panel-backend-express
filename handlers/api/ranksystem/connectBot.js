@@ -16,6 +16,11 @@ module.exports = async (req, res) => {
         if (scope == "reseller" && bot.author !== username) {
             return res.status(apiCodes.FORBIDDEN).json(responses.COMMON.ACCESS_DENIED)
         }
+
+        if (bot.state == "suspended") {
+            return res.status(apiCodes.BAD_REQUEST).json(responses.RANKSYSTEM.SUSPENDED)
+        }
+
         const panel = RanksystemPanel.getPanel()
         if (!panel?.socket?.connected) {
             return res.status(apiCodes.INTERNAL_SERVER_ERROR).json(responses.PANEL.IS_OFFLINE)

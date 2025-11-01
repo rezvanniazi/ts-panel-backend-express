@@ -13,6 +13,10 @@ module.exports = async (req, res) => {
             return res.status(apiCodes.NOT_FOUND).json(responses.RANKSYSTEM.NOT_FOUND)
         }
 
+        if (bot.isExpired()) {
+            return res.status(apiCodes.BAD_REQUEST).json(responses.RANKSYSTEM.EXPIRED)
+        }
+
         if (scope == "reseller" && bot.author !== username) {
             return res.status(apiCodes.FORBIDDEN).json(responses.COMMON.ACCESS_DENIED)
         }

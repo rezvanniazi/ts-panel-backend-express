@@ -22,8 +22,8 @@ module.exports = async (req, res) => {
         }
         //
         if (
-            (confuser && confuser !== "" && confuser !== bot.username) ||
-            (confpass && confpass !== "" && confpass !== bot.password)
+            (confuser && confuser !== "" && confuser !== bot.username && bot.status == "online") ||
+            (confpass && confpass !== "" && confpass !== bot.password && bot.status == "online")
         ) {
             await panel.changeWebInterface({ templateName: bot.template_name, username: confuser, password: confpass })
             await bot.update({ username: confuser, password: confpass })

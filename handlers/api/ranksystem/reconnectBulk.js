@@ -27,6 +27,9 @@ module.exports = async (req, res) => {
         await Promise.all(
             botList.map((b) => {
                 return new Promise((resolve) => {
+                    if (b.state == "suspended") {
+                        return resolve()
+                    }
                     panel.reconnectBot({ templateName: b.template_name })
                     resolve()
                 })

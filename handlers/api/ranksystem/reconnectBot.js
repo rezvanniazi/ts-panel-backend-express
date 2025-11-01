@@ -20,6 +20,10 @@ module.exports = async (req, res) => {
         if (!panel?.socket?.connected) {
             return res.status(apiCodes.INTERNAL_SERVER_ERROR).json(responses.PANEL.IS_OFFLINE)
         }
+        if (bot.state == "suspended") {
+            return res.status(apiCodes.BAD_REQUEST).json(responses.RANKSYSTEM.IS_SUSPENDED)
+        }
+
         //
         try {
             await panel.reconnectBot({ templateName: bot.template_name })

@@ -81,4 +81,8 @@ const Ranksystems = sequelize.define(
     }
 )
 
+Ranksystems.prototype.isExpired = function () {
+    return this.expires && new Date(this.expires) < new Date()
+}
+
 module.exports = Ranksystems
