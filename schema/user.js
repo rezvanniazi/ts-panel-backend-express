@@ -53,9 +53,9 @@ module.exports = {
         refreshToken: Joi.string().required(),
     }).required(),
     token: {
-        create: Joi.object({ timeInDays: Joi.number().integer().empty("").default(null) }).optional(),
+        create: Joi.object({ timeInDays: Joi.number().integer().allow("").empty("") }).optional(),
         delete: Joi.object({
-            tokenId: Joi.number().integer().required(),
+            tokenId: Joi.string().max(45).required(),
         }).required(),
     },
 }

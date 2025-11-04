@@ -195,7 +195,7 @@ const editServer = async (req, res) => {
         async function handleSubdomainChange() {
             try {
                 // Handle subdomain changes
-                if (subdomain !== undefined && subdomain !== server.subdomain_name) {
+                if (subdomain && subdomain !== server.subdomain_name) {
                     emitStep("progress", "درحال تغییر ساب دامنه")
 
                     const company = await CompanyList.findOne({ where: { name: user.company_name } })

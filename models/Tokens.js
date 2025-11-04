@@ -5,11 +5,11 @@ const Tokens = sequelize.define(
     "Tokens",
     {
         id: {
-            type: DataTypes.INTEGER(11),
+            type: DataTypes.STRING(45),
             primaryKey: true,
-            autoIncrement: true,
             allowNull: false,
         },
+
         user_id: {
             type: DataTypes.INTEGER(11),
             allowNull: false,
@@ -17,8 +17,10 @@ const Tokens = sequelize.define(
                 model: "Users",
                 key: "id",
             },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
         },
-        token_hash: {
+        token: {
             type: DataTypes.STRING(255),
             allowNull: false,
             unique: true,

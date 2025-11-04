@@ -6,7 +6,7 @@ const Ranksystems = require("../../../models/Ranksystems")
 const RanksystemSettings = require("../../../models/RanksystemSettings")
 
 module.exports = async (req, res) => {
-    const transaction = sequelize.transaction()
+    const transaction = await sequelize.transaction()
 
     try {
         const { username, scope } = req.user

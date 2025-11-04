@@ -39,16 +39,16 @@ module.exports = async (req, res) => {
         if (companyName) {
             user.company_name = companyName
         }
-        if (canUseBot) {
+        if (canUseBot !== undefined) {
             user.can_use_bot = canUseBot
         }
-        if (canUseManagerBot) {
+        if (canUseManagerBot !== undefined) {
             user.can_use_manager_bots = canUseManagerBot
         }
-        if (canUseServers) {
+        if (canUseServers !== undefined) {
             user.can_use_servers = canUseServers
         }
-        if (canUseRanksystems) {
+        if (canUseRanksystems !== undefined) {
             user.can_use_ranksystems = canUseRanksystems
         }
         user.info = info

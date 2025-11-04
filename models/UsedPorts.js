@@ -66,6 +66,7 @@ UsedPorts.findAvailable = async function () {
     }
 
     // Try ports in random order
+
     for (const port of allPorts) {
         if (!usedPortSet.has(port)) {
             // Double-check by testing if the port is actually available

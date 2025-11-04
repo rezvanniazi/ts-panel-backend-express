@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken")
 const config = require("../config")
 const responses = require("../constants/responses")
 const apiCodes = require("../constants/apiCodes")
+const Tokens = require("../models/Tokens")
+const Users = require("../models/Users")
 
 const generateAccessToken = (user) => {
     const accessToken = jwt.sign(
@@ -29,12 +31,37 @@ const jwtAuth = (req, res, next, token) => {
         return res.status(apiCodes.FORBIDDEN).json(responses.COMMON.ACCESS_DENIED)
     }
 
-    jwt.verify(token, tokens.jwt, (err, user) => {
+    jwt.verify(token, tokens.jwt, async (err, decoded) => {
         if (err) {
             return res.status(apiCodes.FORBIDDEN).json(responses.COMMON.ACCESS_DENIED)
         }
 
-        req.user = user
+        if (decoded.type == "staticToken") {
+            const staticToken = await Tokens.findByPk(decoded.id, {
+                include: [{ model: Users, as: "user" }],
+                raw: true,
+                nest: true,
+            })
+
+            if (!staticToken) {
+                return res.status(apiCodes.FORBIDDEN).json(responses.COMMON.ACCESS_DENIED)
+            }
+
+            const user = staticToken.user
+
+            req.user = {
+                id: user.id,
+                username: user.username,
+                scope: user.scope,
+                companyName: user.company_name,
+                canUseAudioBot: user.can_use_bot,
+                canUseServers: user.can_use_servers,
+                canUseRanksystems: user.can_use_ranksystems,
+                canUseManagerBot: user.can_use_manager_bots,
+            }
+        } else {
+            req.user = decoded
+        }
 
         next()
     })

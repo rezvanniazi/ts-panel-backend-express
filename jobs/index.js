@@ -18,7 +18,7 @@ class JobManager {
         this.panelSyncJobs.startPanelSyncCheck()
         this.teamspeakJobs.startTeamspeakJobsCheck()
         this.serverUsageJob.startServerUsageCheck()
-        this.licenseCheckJobs.startLicenseCheck()
+        // this.licenseCheckJobs.startLicenseCheck()
     }
 }
 

@@ -17,7 +17,7 @@ module.exports = {
         templateName: Joi.string().required(),
         confuser: Joi.string().required(),
         confpass: Joi.string().required(),
-        information: Joi.string().required(),
+        information: Joi.string().empty("").optional(),
     }).required(),
     delete: Joi.object({
         botId: Joi.number().integer().required(),

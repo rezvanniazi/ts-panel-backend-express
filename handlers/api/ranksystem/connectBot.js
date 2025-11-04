@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
         }
 
         if (bot.state == "suspended") {
-            return res.status(apiCodes.BAD_REQUEST).json(responses.RANKSYSTEM.SUSPENDED)
+            return res.status(apiCodes.BAD_REQUEST).json(responses.RANKSYSTEM.IS_SUSPENDED)
         }
 
         const panel = RanksystemPanel.getPanel()
