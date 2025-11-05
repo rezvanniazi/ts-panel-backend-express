@@ -113,9 +113,12 @@ module.exports = async (req, res) => {
 
         // Call api and create bot in Manager Bots panel
         const template = createTemplate(templateName, channels, conn)
+
+        let createResponse
+
         try {
-            await managerBotApis.create({ panel, data: template })
-            bot.status = "online"
+            createResponse = await managerBotApis.create({ panel, data: template })
+
             await bot.save({ transaction })
         } catch (err) {
             const errorCode = err?.errorCode
@@ -123,13 +126,13 @@ module.exports = async (req, res) => {
             if (errorCode == "ALREADY_ADDED") {
                 await transaction.rollback()
                 return res.status(apiCodes.BAD_REQUEST).json(responses.MANAGER_BOT.TEMPLATE_NAME_IN_USE)
-            } else if (errorCode == "ECONNREFUSED") {
-                bot.status = "offline"
             } else {
                 throw err
             }
         }
         //////////////////////////////////////////////////
+        bot.status = createResponse?.isConnected ? "online" : "offline"
+
         await bot.save({ transaction })
         await transaction.commit()
 
@@ -137,7 +140,9 @@ module.exports = async (req, res) => {
         botLogger.info(`بات منیجر ${templateName} با موفقیت توسط ${user.username} ساخته شد`)
         userLogger.info(`مقدار ${price} از حساب ${user.username} کسر شد`)
 
-        return res.status(apiCodes.SUCCESS).json(responses.MANAGER_BOT.CREATED)
+        return res
+            .status(apiCodes.SUCCESS)
+            .json({ ...responses.MANAGER_BOT.CREATED, isConnected: createResponse?.isConnected || false })
     } catch (err) {
         await transaction.rollback()
 

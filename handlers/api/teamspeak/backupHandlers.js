@@ -1,3 +1,4 @@
+const { readFileSync } = require("fs-extra")
 const apiCodes = require("../../../constants/apiCodes")
 const responses = require("../../../constants/responses")
 
@@ -6,6 +7,7 @@ const { createSnapshot, deploySnapshot } = require("../../../lib/teamspeak/teams
 const deleteSnapshot = require("../../../lib/utils/deleteSnapshot")
 const getSnapshotList = require("../../../lib/utils/getSnapshotList")
 const Servers = require("../../../models/Servers")
+const config = require("../../../config")
 
 exports.create = async (req, res) => {
     const { username, scope } = req.user
@@ -86,4 +88,27 @@ exports.getBackupList = async (req, res) => {
 
     const backupList = await getSnapshotList(server.server_port, server.query_port)
     return res.status(apiCodes.SUCCESS).json(backupList)
+}
+
+exports.downloadBackup = async (req, res) => {
+    const { username, scope } = req.user
+    const { serverId, backupName } = req.query
+
+    console.log(serverId, backupName)
+
+    if (!serverId || !backupName) {
+        return res.status(apiCodes.FORBIDDEN).json(responses.COMMON.ACCESS_DENIED)
+    }
+
+    const server = await Servers.findByPk(serverId)
+    if (!server || server.state == "suspended") {
+        return res.status(apiCodes.BAD_REQUEST).json(responses.TEAMSPEAK.NOT_FOUND)
+    }
+    if (scope == "reseller" && server.author !== username) {
+        return res.status(apiCodes.FORBIDDEN).json(responses.COMMON.ACCESS_DENIED)
+    }
+
+    return res.download(
+        `${config.teamspeak.pathToParentDir}/Teamspeak-${server.server_port}-${server.query_port}/backups/${backupName}`
+    )
 }

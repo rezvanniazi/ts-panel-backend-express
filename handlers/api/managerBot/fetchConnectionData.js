@@ -13,9 +13,9 @@ module.exports = async (req, res) => {
         userLogger.info(`دریافت اطلاعات سرور توسط ${req.user.username} - هاست: ${host}`)
         return res.status(apiCodes.SUCCESS).json(data)
     } catch (err) {
-        if (err.message == "ECONNREFUSED") {
+        if (err == "ECONNREFUSED") {
             return res.status(apiCodes.NOT_RUNNING).json(responses.MANAGER_BOT.SERVER_FETCH.ECONNREFUSED)
-        } else if (err.message == "INCORRECT_LOGIN") {
+        } else if (err == "INCORRECT_LOGIN") {
             return res.status(apiCodes.FORBIDDEN).json(responses.MANAGER_BOT.SERVER_FETCH.INVALID_LOGIN)
         } else {
             console.log(err)

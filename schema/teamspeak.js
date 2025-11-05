@@ -27,7 +27,7 @@ module.exports = {
         serverId: Joi.number().integer().required(),
         packageName: Joi.string().optional().empty(""),
         querypassword: Joi.string().optional().empty(""),
-        author: Joi.string().optional().empty(""),
+        author: Joi.string().empty(null).optional(),
         version: Joi.string().valid("1.5.6", "1.4.22").optional().empty(""),
         information: Joi.string().max(255).optional().empty(""),
         subdomain: Joi.string().optional().allow(""),

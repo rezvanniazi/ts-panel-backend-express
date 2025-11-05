@@ -54,7 +54,6 @@ module.exports = async (req, res) => {
         }
 
         //////// Change TS3Audiobot Settings //////
-        await audioBotHelper.disconnect({ templateName: bot.template_name, panel: currentPanel })
 
         if (botServerIp && botServerIp !== bot.bot_server_ip) {
             bot.bot_server_ip = botServerIp
@@ -82,6 +81,20 @@ module.exports = async (req, res) => {
                 panel: currentPanel,
             })
         }
+        if (bot.bot_channel_commander_is_on !== botChannelCommanderIsOn) {
+            if (botChannelCommanderIsOn) {
+                await audioBotHelper.turnOffChannelCommander({
+                    templateName: bot.template_name,
+                    panel: currentPanel,
+                })
+            } else {
+                await audioBotHelper.turnOnChannelCommander({
+                    templateName: bot.template_name,
+                    panel: currentPanel,
+                })
+            }
+        }
+
         bot.bot_channel_commander_is_on = botChannelCommanderIsOn
         if (bot.state == "active") {
             await audioBotHelper.connect({ templateName: bot.template_name, panel: currentPanel })

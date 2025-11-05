@@ -24,6 +24,7 @@ const handlers = {
         deploy: require("../handlers/api/teamspeak/backupHandlers").deployBackup,
         delete: require("../handlers/api/teamspeak/backupHandlers").deleteBackup,
         getAll: require("../handlers/api/teamspeak/backupHandlers").getBackupList,
+        downloadBackup: require("../handlers/api/teamspeak/backupHandlers").downloadBackup,
     },
     query: require("../handlers/api/teamspeak/teamspeakQuery"),
 }
@@ -62,6 +63,7 @@ router.post("/snapshot/create", validate(schema.snapshot.create), handlers.snaps
 router.post("/snapshot/deploy", validate(schema.snapshot.deploy), handlers.snapshot.deploy)
 router.delete("/snapshot/delete", validate(schema.snapshot.delete), handlers.snapshot.delete)
 router.post("/snapshot/getall", validate(schema.snapshot.getAll), handlers.snapshot.getAll)
+router.get("/snapshot/download", handlers.snapshot.downloadBackup)
 
 router.post("/query/get-servergroup-list", validate(schema.query.getServerGroupList), handlers.query.getServergroupList)
 router.post("/query/get-online-list", validate(schema.query.getOnlineList), handlers.query.getOnlineList)

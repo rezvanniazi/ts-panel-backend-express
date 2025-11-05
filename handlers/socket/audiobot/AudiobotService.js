@@ -121,7 +121,7 @@ class AudiobotService {
 
             const bot = await AudioBots.findOne({ where: { template_name: templateName } })
 
-            if (scope === "reseller" && bot.author !== username) return
+            if (scope === "reseller" && bot.bot_owner !== username) return
 
             const panel = await MusicBotPanels.findByPk(bot.panel_id)
 
