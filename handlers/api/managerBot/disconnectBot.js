@@ -44,7 +44,7 @@ module.exports = async (req, res) => {
             }
         }
 
-        botLogger.info(`بات توسط ${username} قطع شد`)
+        botLogger.info(`بات ${bot.template_name} توسط ${username} قطع شد`)
         return res.status(apiCodes.SUCCESS).json(responses.MANAGER_BOT.DISCONNECTED)
     } catch (err) {
         console.error(err)

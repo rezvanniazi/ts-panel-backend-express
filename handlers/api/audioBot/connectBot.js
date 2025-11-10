@@ -21,12 +21,12 @@ module.exports = async (req, res) => {
         }
         const panel = await MusicBotPanels.findByPk(bot.panel_id)
         if (!panel || panel.status === "offline") {
-            botLogger.error(`پنل ${bot.panel_id} برای بات ${botId} آفلاین یا پیدا نشد`)
+            botLogger.error(`پنل ${bot.panel_id} برای بات ${bot.template_name} آفلاین یا پیدا نشد`)
             return res.status(apiCodes.PANEL_OFFLINE).json(responses.PANEL.IS_OFFLINE)
         }
 
         if (scope == "reseller" && bot.bot_owner !== username) {
-            botLogger.error(`دسترسی غیرمجاز برای ${username} به بات ${botId}`)
+            botLogger.error(`دسترسی غیرمجاز برای ${username} به بات ${bot.template_name}`)
             return res.status(apiCodes.FORBIDDEN).json(responses.COMMON.ACCESS_DENIED)
         }
         ///////////////////////////////////////////////////
@@ -39,7 +39,7 @@ module.exports = async (req, res) => {
         bot.status = status || "offline"
         await bot.save()
 
-        botLogger.info(`بات توسط ${username} متصل شد`)
+        botLogger.info(`بات ${bot.template_name} توسط ${username} متصل شد`)
         return res.status(apiCodes.SUCCESS).json(responses.AUDIO_BOT.CONNECT.SUCCESS)
     } catch (err) {
         console.error(err)

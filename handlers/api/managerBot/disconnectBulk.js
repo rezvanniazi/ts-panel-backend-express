@@ -33,6 +33,9 @@ module.exports = async (req, res) => {
 
                     if (panel && panel?.socket?.connected) {
                         await panel.disconnectBot({ templateName: b.template_name }).catch(() => {})
+                        const botLogger = createLogger("managerBot", b.id)
+                        botLogger.info(`بات ${b.template_name} توسط ${username} قطع شد`)
+
                         b.status = "offline"
                         await b.save()
                     }

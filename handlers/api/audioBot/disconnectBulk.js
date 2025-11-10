@@ -30,6 +30,9 @@ module.exports = async (req, res) => {
                 return new Promise(async (resolve, reject) => {
                     let panel = panelList.find((p) => p.id == b.panel_id)
                     if (panel && panel.status == "online") {
+                        const botLogger = createLogger("audiobot", b.id)
+                        botLogger.info(`بات ${b.template_name} توسط ${username} دیسکانکت شد`)
+
                         await audioBotHelper.disconnect({ templateName: b.template_name, panel })
                     }
 

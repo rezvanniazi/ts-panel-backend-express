@@ -27,7 +27,7 @@ const stopServerBulk = async (req, res) => {
                     console.log("Couldn't stop server with id of", s.id, err.message)
                 })
                 const serverLogger = createLogger("teamspeak", s.id)
-                serverLogger.info(`سرور توسط ${username} خاموش شد`)
+                serverLogger.info(`سرور ${s.server_port}-${s.query_port} توسط ${username} خاموش شد`)
                 resolve()
             })
         })

@@ -62,6 +62,9 @@ module.exports = async (req, res) => {
                 address: botServerIp,
                 panel: currentPanel,
             })
+            botLogger.info(
+                `ادرس بات ${bot.template_name} توسط ${username} از ${bot.bot_server_ip} به ${botServerIp} تغییر کرد`
+            )
         }
 
         if (botDefaultChannelName && botDefaultChannelName !== bot.bot_default_channel_name) {
@@ -71,6 +74,9 @@ module.exports = async (req, res) => {
                 defaultChannel: botDefaultChannelName,
                 panel: currentPanel,
             })
+            botLogger.info(
+                `کانال پیشفرض بات ${bot.template_name} توسط ${username} از ${bot.bot_default_channel_name} به ${botDefaultChannelName} تغییر کرد`
+            )
         }
 
         if (botName && botName !== bot.name) {
@@ -80,6 +86,7 @@ module.exports = async (req, res) => {
                 botName: botName,
                 panel: currentPanel,
             })
+            botLogger.info(`نام بات ${bot.template_name} توسط ${username} از ${bot.name} به ${botName} تغییر کرد`)
         }
         if (bot.bot_channel_commander_is_on !== botChannelCommanderIsOn) {
             if (botChannelCommanderIsOn) {
@@ -93,6 +100,9 @@ module.exports = async (req, res) => {
                     panel: currentPanel,
                 })
             }
+            botLogger.info(
+                `وضعیت بات کامندر کانال ${bot.template_name} توسط ${username} به ${botChannelCommanderIsOn} تغییر کرد`
+            )
         }
 
         bot.bot_channel_commander_is_on = botChannelCommanderIsOn

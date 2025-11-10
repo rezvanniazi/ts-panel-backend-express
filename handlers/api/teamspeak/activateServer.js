@@ -32,7 +32,7 @@ const activateServer = async (req, res) => {
 
     await server.update({ state: "active" })
 
-    serverLogger.info("سرور با موفقیت فعال شد")
+    serverLogger.info(`سرور ${server.server_port}-${server.query_port} توسط ${req.user.username} فعال شد`)
     return res.status(apiCodes.SUCCESS).json(responses.TEAMSPEAK.ACTIVATED)
 }
 

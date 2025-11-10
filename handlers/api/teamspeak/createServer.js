@@ -158,9 +158,11 @@ const createServer = async (req, res) => {
         }
     } finally {
         serverLogger.info(
-            `سرور با موفقیت با پکیج ${package.package_description} با قیمت ${package.package_amount} توسط ${user.username} ساخته شد`
+            `سرور ${finalServerport}-${finalQueryport} با موفقیت با پکیج ${package.package_description} با قیمت ${package.package_amount} توسط ${user.username} ساخته شد`
         )
-        userLogger.info(`مقدار ${package.package_amount} از حساب ${user.username} کسر شد`)
+        userLogger.info(
+            `مقدار ${package.package_amount} از حساب کاربر بابت ساخت سرور ${finalServerport}-${finalQueryport} کسر شد`
+        )
         transaction.commit()
     }
 

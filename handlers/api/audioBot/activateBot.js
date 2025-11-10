@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
             bot.status = "connecting"
         }
         const logger = createLogger("audiobot", botId)
-        logger.info(`بات توسط ${username} فعال شد`)
+        logger.info(`بات ${bot.template_name} توسط ${username} فعال شد`)
 
         bot.state = "active"
         await bot.save()

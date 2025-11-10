@@ -96,10 +96,12 @@ const editServer = async (req, res) => {
                     // Update user balance
                     try {
                         await user.addBalance(remainedServerAmount, transaction)
-                        userLogger.info(`مقدار ${remainedServerAmount} به حساب کاربر بابت ویرایش پکیج اضافه شد`)
+                        userLogger.info(
+                            `مقدار ${remainedServerAmount} به حساب کاربر بابت ویرایش پکیج سرور ${server.server_port}-${server.query_port} اضافه شد`
+                        )
                         await requestUser.subtractBalance(newPackage.package_amount || 0, transaction)
                         createLogger("user", requestUser.id).info(
-                            `مقدار ${newPackage.package_amount} از حساب کاربر بابت تغییر پکیج کسر شد`
+                            `مقدار ${newPackage.package_amount} از حساب کاربر بابت تغییر پکیج سرور ${server.server_port}-${server.query_port} کسر شد`
                         )
                     } catch (err) {
                         if (err.message === "Insufficient balance") {
@@ -120,7 +122,9 @@ const editServer = async (req, res) => {
                         server.expires = null
                     }
 
-                    serverLogger.info(`پکیج سرور از ${server.package_name} به ${newPackage.package_name} تغییر یافت`)
+                    serverLogger.info(
+                        `پکیج سرور ${server.server_port}-${server.query_port} توسط ${user.username} از ${server.package_name} به ${newPackage.package_name} تغییر یافت`
+                    )
 
                     server.package_name = newPackage.package_name
 

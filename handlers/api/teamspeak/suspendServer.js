@@ -20,7 +20,7 @@ const suspendServer = async (req, res) => {
 
         await server.update({ state: "suspended" })
         const serverLogger = createLogger("teamspeak", serverId)
-        serverLogger.info(`سرور توسط ${req.user.username} غیرفعال شد`)
+        serverLogger.info(`سرور ${server.server_port}-${server.query_port} توسط ${req.user.username} غیرفعال شد`)
 
         return res.status(apiCodes.SUCCESS).json(responses.TEAMSPEAK.SUSPENDED)
     } catch (err) {

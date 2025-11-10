@@ -42,7 +42,7 @@ module.exports = async (req, res) => {
         const price = calculatePrice(permissions, selectedPerms)
 
         if (templateNameInUse) {
-            userLogger.error(`نام قالب ${templateName} توسط ${user.username} قبلاً استفاده شده`)
+            userLogger.error(`نام قالب ${templateName} درخواستشده توسط ${user.username} قبلاً استفاده شده`)
             return res.status(apiCodes.BAD_REQUEST).json(responses.MANAGER_BOT.TEMPLATE_NAME_IN_USE)
         }
 
@@ -67,7 +67,7 @@ module.exports = async (req, res) => {
             await user.subtractBalance(price, transaction)
         } catch (err) {
             if (err?.message == "Insufficient balance") {
-                userLogger.error(`موجودی ناکافی برای ${user.username} - مبلغ مورد نیاز: ${price}`)
+                userLogger.error(`موجودی ناکافی برای ${user.username} بابت ساخت بات منیجر - مبلغ مورد نیاز: ${price}`)
                 await transaction.rollback()
                 return res.status(apiCodes.FORBIDDEN).json(responses.USER.INSUFFICIENT_BALANCE)
             } else {
@@ -138,7 +138,7 @@ module.exports = async (req, res) => {
 
         const botLogger = createLogger("managerBot", bot.id)
         botLogger.info(`بات منیجر ${templateName} با موفقیت توسط ${user.username} ساخته شد`)
-        userLogger.info(`مقدار ${price} از حساب ${user.username} کسر شد`)
+        userLogger.info(`مقدار ${price} از حساب ${user.username} بابت ساخت بات منیجر ${bot.template_name} کسر شد`)
 
         return res
             .status(apiCodes.SUCCESS)

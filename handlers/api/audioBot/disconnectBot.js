@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
 
         const panel = await MusicBotPanels.findByPk(bot.panel_id)
         if (!panel) {
-            botLogger.error(`پنل ${bot.panel_id} برای بات ${botId} پیدا نشد`)
+            botLogger.error(`پنل ${bot.panel_id} برای بات ${bot.template_name} پیدا نشد`)
             return res.status(apiCodes.PANEL_OFFLINE).json(responses.PANEL.IS_OFFLINE)
         }
 
@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
         bot.status = "offline"
         await bot.save()
 
-        botLogger.info(`بات توسط ${username} قطع شد`)
+        botLogger.info(`بات ${bot.template_name} توسط ${username} قطع شد`)
         return res.status(apiCodes.SUCCESS).json(responses.AUDIO_BOT.DISCONNECTED)
     } catch (err) {
         console.error(err)

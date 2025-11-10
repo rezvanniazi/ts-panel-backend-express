@@ -23,7 +23,7 @@ const toggleAutoRenew = async (req, res) => {
         bot.autorenew = autorenew
         await bot.save()
 
-        botLogger.info(`تنظیمات تمدید خودکار بات توسط ${username} به روز شد: ${autorenew}`)
+        botLogger.info(`تنظیمات تمدید خودکار بات توسط ${username} ${autorenew ? "فعال" : "غیرفعال"} شد`)
         return res.status(apiCodes.SUCCESS).json(responses.MANAGER_BOT.TOGGLE_AUTORENEW.SUCCESS)
     } catch (err) {
         console.log(err)

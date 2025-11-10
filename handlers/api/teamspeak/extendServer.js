@@ -34,7 +34,9 @@ const extendServer = async (req, res) => {
 
     try {
         await user.subtractBalance(package.package_amount, transaction)
-        userLogger.info(`مقدار ${package.package_amount} از حساب کاربر بابت تمدید سرور کسر شد`)
+        userLogger.info(
+            `مقدار ${package.package_amount} از حساب کاربر بابت تمدید سرور ${server.server_port}-${server.query_port} کسر شد`
+        )
 
         await transaction.commit()
     } catch (err) {
@@ -51,7 +53,9 @@ const extendServer = async (req, res) => {
         }
         expires.setDate(expires.getDate() + package.package_days)
 
-        serverLogger.info(`${package.package_days} روز به سرور توسط ${req.user.username} اضافه شد`)
+        serverLogger.info(
+            `${package.package_days} روز به سرور ${server.server_port}-${server.query_port} توسط ${req.user.username} اضافه شد`
+        )
 
         server.expires = expires
         await server.save()

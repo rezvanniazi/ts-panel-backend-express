@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
         bot.state = "suspended"
         await bot.save()
 
-        botLogger.info(`بات توسط ${username} معلق شد`)
+        botLogger.info(`بات ${bot.template_name} توسط ${username} معلق شد`)
         return res.status(apiCodes.SUCCESS).json(responses.AUDIO_BOT.SUSPENDED)
     } catch (err) {
         console.error("Error suspending bot: ", err)

@@ -32,6 +32,8 @@ module.exports = async (req, res) => {
                     let panel = panelList.find((p) => p.id == b.panel_id)
                     if (panel && panel.status == "online" && b.state !== "suspended") {
                         await audioBotHelper.connect({ templateName: b.template_name, panel })
+                        const botLogger = createLogger("audiobot", b.id)
+                        botLogger.info(`بات ${b.template_name} توسط ${username} متصل شد`)
                         b.status = "connecting"
                         await b.save()
                     }

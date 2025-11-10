@@ -18,7 +18,7 @@ const restartServer = async (req, res) => {
     }
 
     const serverLogger = createLogger("teamspeak", serverId)
-    serverLogger.info(`سرور توسط ${username} ریستارت شد`)
+    serverLogger.info(`سرور ${server.server_port}-${server.query_port} توسط ${username} ریستارت شد`)
 
     await teamspeakHelper.stop(server).catch(null)
 

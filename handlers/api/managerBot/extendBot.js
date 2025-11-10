@@ -75,8 +75,8 @@ module.exports = async (req, res) => {
         await bot.update({ expires })
         await transaction.commit()
 
-        botLogger.info(`بات توسط ${user.username} تمدید شد - 30 روز`)
-        userLogger.info(`مقدار ${price} از حساب ${user.username} کسر شد`)
+        botLogger.info(`بات ${bot.template_name} توسط ${user.username} تمدید شد - 30 روز`)
+        userLogger.info(`مقدار ${price} از حساب ${user.username} بابت تمدید بات منیجر ${bot.template_name} کسر شد`)
 
         return res.status(apiCodes.SUCCESS).json(responses.MANAGER_BOT.EXTENDED)
     } catch (err) {

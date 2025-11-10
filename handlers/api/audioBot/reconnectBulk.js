@@ -33,6 +33,9 @@ module.exports = async (req, res) => {
                     if (panel && panel.status == "online") {
                         await audioBotHelper.disconnect({ templateName: b.template_name, panel })
                         await audioBotHelper.connect({ templateName: b.template_name, panel })
+
+                        const botLogger = createLogger("audiobot", b.id)
+                        botLogger.info(`بات ${b.template_name} توسط ${username} ریکانکت شد`)
                     }
                     b.status = "connecting"
                     await b.save()

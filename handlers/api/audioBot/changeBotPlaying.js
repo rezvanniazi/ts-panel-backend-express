@@ -17,17 +17,17 @@ module.exports = async (req, res) => {
         const botLogger = createLogger("audiobot", botId)
 
         if (!bot) {
-            botLogger.error(`بات با ایدی ${botId} توسط ${username} پیدا نشد`)
+            botLogger.error(`بات با ایدی ${bot.template_name} توسط ${username} پیدا نشد`)
             return res.status(apiCodes.NOT_FOUND).json(responses.AUDIO_BOT.NOT_FOUND)
         }
         const panel = await MusicBotPanels.findByPk(bot.panel_id)
         if (!panel || panel.status == "offline") {
-            botLogger.error(`پنل ${bot.panel_id} برای بات ${botId} آفلاین یا پیدا نشد`)
+            botLogger.error(`پنل ${bot.panel_id} برای بات ${bot.template_name} آفلاین یا پیدا نشد`)
             return res.status(apiCodes.PANEL_OFFLINE).json(responses.PANEL.IS_OFFLINE)
         }
 
         if (scope == "reseller" && bot.bot_owner !== username) {
-            botLogger.error(`دسترسی غیرمجاز برای ${username} به بات ${botId}`)
+            botLogger.error(`دسترسی غیرمجاز برای ${username} به بات ${bot.template_name}`)
             return res.status(apiCodes.FORBIDDEN).json(responses.COMMON.ACCESS_DENIED)
         }
 
@@ -44,7 +44,7 @@ module.exports = async (req, res) => {
         }
         await bot.save()
 
-        botLogger.info(`رادیو بات توسط ${username} تغییر کرد به: ${radioName || "خاموش"}`)
+        botLogger.info(`رادیو بات ${bot.template_name} توسط ${username} تغییر کرد به: ${radioName || "خاموش"}`)
         return res.status(apiCodes.SUCCESS).json(responses.AUDIO_BOT.RADIO_CHANGED)
     } catch (err) {
         console.error(err)

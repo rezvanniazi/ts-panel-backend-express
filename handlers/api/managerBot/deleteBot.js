@@ -77,7 +77,9 @@ module.exports = async (req, res) => {
         await user.addBalance(remainedPrice)
 
         if (remainedPrice > 0) {
-            userLogger.info(`مقدار ${remainedPrice} به حساب ${user.username} اضافه شد بابت حذف بات منیجر`)
+            userLogger.info(
+                `مقدار ${remainedPrice} به حساب ${user.username} بابت حذف بات منیجر ${bot.template_name} اضافه شد`
+            )
         }
         userLogger.info(`بات منیجر ${bot.template_name} توسط ${user.username} حذف شد`)
         clearLog("managerBot", botId)

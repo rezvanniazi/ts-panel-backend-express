@@ -46,7 +46,9 @@ module.exports = async (req, res) => {
         if (bot.expires && package && package.package_days && package.package_days > 0) {
             const remainedAmount = calculateRemainedAmount(bot, package)
             await user.addBalance(remainedAmount)
-            userLogger.info(`مقدار ${remainedAmount} به حساب ${user.username} اضافه شد بابت حذف بات`)
+            userLogger.info(
+                `مقدار ${remainedAmount} به حساب ${user.username} بابت حذف بات ${bot.template_name} اضافه شد`
+            )
         }
 
         await bot.destroy()
@@ -55,7 +57,7 @@ module.exports = async (req, res) => {
         }
 
         clearLog("audiobot", botId)
-        userLogger.info(`بات ${bot.name} توسط ${user.username} حذف شد`)
+        userLogger.info(`بات ${bot.template_name} توسط ${user.username} حذف شد`)
 
         return res.status(apiCodes.SUCCESS).json(responses.AUDIO_BOT.DELETED)
     } catch (err) {

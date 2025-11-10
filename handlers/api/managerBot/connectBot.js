@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
             return res.status(apiCodes.NOT_FOUND).json(responses.MANAGER_BOT.NOT_FOUND)
         }
         if (scope == "reseller" && bot.author !== username) {
-            botLogger.error(`دسترسی غیرمجاز برای ${username} به بات ${botId}`)
+            botLogger.error(`دسترسی غیرمجاز برای ${username} به بات ${bot.template_name}`)
             return res.status(apiCodes.FORBIDDEN).json(responses.COMMON.ACCESS_DENIED)
         }
 
@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
         const panel = ManagerBotPanel.getPanel(bot.panel_id)
 
         if (!panel || !panel?.socket?.connected) {
-            botLogger.error(`پنل ${bot.panel_id} برای بات ${botId} آفلاین یا پیدا نشد`)
+            botLogger.error(`پنل ${bot.panel_id} برای بات ${bot.template_name} آفلاین یا پیدا نشد`)
             return res.status(apiCodes.PANEL_OFFLINE).json(responses.PANEL.IS_OFFLINE)
         }
 
@@ -40,11 +40,15 @@ module.exports = async (req, res) => {
             if (errorCode == "NOT_FOUND") {
                 await panel.createBot(createTemplate(bot.template_name, bot.channels, bot.conn))
             } else if (errorCode == "CONNECT_FAILED") {
-                botLogger.error(`بات به دلیل ${errorCode} به سرور متصل نشده درخواست شده توسط ${username}`)
+                botLogger.error(
+                    `بات ${bot.template_name} به دلیل ${errorCode} به سرور متصل نشده درخواست شده توسط ${username}`
+                )
                 bot.status = "offline"
                 return res.status(apiCodes.BAD_REQUEST).json(responses.MANAGER_BOT.CONNECT.CONN_REFUSED)
             } else if (errorCode == "ALREADY_CONNECTED") {
-                botLogger.error(`درخواست کانکت با شکست مواجه شد به دلیل متصل میباشد درخواست شده توسط ${username}`)
+                botLogger.error(
+                    `درخواست کانکت بات ${bot.template_name} با شکست مواجه شد به دلیل متصل میباشد درخواست شده توسط ${username}`
+                )
                 bot.status = "online"
                 return res.status(apiCodes.ALREADY_RUNNING).json(responses.MANAGER_BOT.CONNECT.ALREADY_CONNECTED)
             } else {
@@ -54,7 +58,7 @@ module.exports = async (req, res) => {
             await bot.save()
         }
 
-        botLogger.info(`بات توسط ${username} متصل شد`)
+        botLogger.info(`بات ${bot.template_name} توسط ${username} متصل شد`)
         return res.status(apiCodes.SUCCESS).json(responses.MANAGER_BOT.CONNECT.SUCCESS)
     } catch (err) {
         console.error(err)

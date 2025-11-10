@@ -34,7 +34,9 @@ const deleteServer = async (req, res) => {
 
         if (package && package.package_days && package.package_days > 0) {
             const remainedAmount = calculateRemainedAmount(server, package)
-            userLogger.info(`مقدار ${remainedAmount} به حساب این کاربر اضافه شد بابت حذف سرور تیم اسپیک`)
+            userLogger.info(
+                `مقدار ${remainedAmount} ${server.sever_port}-${server.query_port} به حساب این کاربر اضافه شد بابت حذف سرور تیم اسپیک`
+            )
 
             await user.addBalance(remainedAmount)
         }

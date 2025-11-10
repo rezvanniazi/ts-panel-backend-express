@@ -61,7 +61,7 @@ module.exports = async (req, res) => {
 
             panel = panels[0]
             if (!panel) {
-                userLogger.error(`هیچ پنل در دسترسی برای ${user.username} پیدا نشد`)
+                userLogger.error(`هیچ پنل موزیک بات در دسترسی برای ${user.username} پیدا نشد`)
                 return res.status(apiCodes.BAD_REQUEST).json(responses.PANEL.NO_AVAILABLE_PANEL)
             }
         }
@@ -86,7 +86,9 @@ module.exports = async (req, res) => {
             })
         } catch (err) {
             if (err.message == "Insufficient balance") {
-                userLogger.error(`موجودی ناکافی برای ${user.username} - مبلغ مورد نیاز: ${package.package_amount}`)
+                userLogger.error(
+                    `موجودی ناکافی برای ${user.username} بابت ساخت موزیک بات - مبلغ مورد نیاز: ${package.package_amount}`
+                )
                 transaction.rollback()
                 return res.status(apiCodes.INSUFFICIENT_BALANCE).json(responses.USER.INSUFFICIENT_BALANCE)
             } else {
@@ -112,8 +114,10 @@ module.exports = async (req, res) => {
 
         await transaction.commit()
 
-        botLogger.info(`بات ${botName} با موفقیت توسط ${user.username} ساخته شد - پکیج: ${package.package_name}`)
-        userLogger.info(`مقدار ${package.package_amount} از حساب ${user.username} کسر شد`)
+        botLogger.info(`بات ${templateName} با موفقیت توسط ${user.username} ساخته شد - پکیج: ${package.package_name}`)
+        userLogger.info(
+            `مقدار ${package.package_amount} از حساب ${user.username} بابت ساخت بات موزیک ${templateName} کسر شد`
+        )
 
         return res.status(apiCodes.SUCCESS).json({ ...responses.AUDIO_BOT.CREATED, ...bot })
     } catch (err) {

@@ -28,7 +28,7 @@ const startServerBulk = async (req, res) => {
                     console.log("Couldn't start server with id of", s.id, err.message)
                 })
                 const serverLogger = createLogger("teamspeak", s.id)
-                serverLogger.info(`سرور توسط ${username} روشن شد`)
+                serverLogger.info(`سرور ${s.server_port}-${s.query_port} توسط ${username} روشن شد`)
 
                 resolve()
             })

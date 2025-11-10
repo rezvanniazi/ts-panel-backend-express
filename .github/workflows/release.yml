@@ -29,15 +29,20 @@ jobs:
               run: |
                   tar -czvf mtxpanel-linux-x64.tar.gz -C dist/ build/ ts-panel .env.example lib/ mtxpanel.service
 
-            - name: Create GitHub Release
+            - name: Release to target repository
               uses: softprops/action-gh-release@v1
               with:
+                  repository: rezvanniazi/mtxpanel-release  # Target repo
                   name: "MTXPanel Linux x64 - ${{ github.ref_name }}"
                   tag_name: ${{ github.ref_name }}
-                  body: "Production build for Linux x64. Version: ${{ github.ref_name }}"
+                  body: |
+                    Production build for Linux x64. Version: ${{ github.ref_name }}
+                    **Version:** ${{ github.ref_name }}
+                    **Built from:** ${{ github.repository }}@${{ github.sha }}
+                    **Date:** ${{ github.event.head_commit.timestamp }}
                   files: |
                       mtxpanel-linux-x64.tar.gz
                   draft: false
                   prerelease: false
               env:
-                  GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }} # Auto-injected by GitHub
+                  GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }} # Auto-injected by GitHub

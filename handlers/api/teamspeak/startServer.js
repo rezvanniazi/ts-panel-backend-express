@@ -18,7 +18,7 @@ const startServer = async (req, res) => {
     }
 
     const serverLogger = createLogger("teamspeak", serverId)
-    serverLogger.info(`سرور توسط ${username} روشن شد`)
+    serverLogger.info(`سرور ${server.server_port}-${server.query_port} توسط ${username} روشن شد`)
 
     const startRes = await teamspeakHelper.start(server).catch((err) => {
         console.log(err.message)

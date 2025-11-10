@@ -18,7 +18,7 @@ const stopServer = async (req, res) => {
     }
 
     const serverLogger = createLogger("teamspeak", serverId)
-    serverLogger.info(`سرور توسط ${username} خاموش شد`)
+    serverLogger.info(`سرور ${server.server_port}-${server.query_port} توسط ${username} خاموش شد`)
 
     const stopRes = await teamspeakHelper.stop(server).catch((err) => {
         console.log(err.message)

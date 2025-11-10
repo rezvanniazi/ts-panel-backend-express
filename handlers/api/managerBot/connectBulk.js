@@ -34,6 +34,9 @@ module.exports = async (req, res) => {
                         try {
                             console.log("HH")
                             await panel.connectBot({ templateName: b.template_name })
+                            const botLogger = createLogger("managerBot", b.id)
+                            botLogger.info(`بات ${b.template_name} توسط ${username} متصل شد`)
+
                             b.status = "online"
                         } catch {
                             b.status = "offline"

@@ -18,14 +18,14 @@ module.exports = async (req, res) => {
             return res.status(apiCodes.BAD_REQUEST).json(responses.MANAGER_BOT.NOT_FOUND)
         }
         if (scope == "reseller" && bot.author !== username) {
-            botLogger.error(`دسترسی غیرمجاز برای ${username} به بات ${botId}`)
+            botLogger.error(`دسترسی غیرمجاز برای ${username} به بات ${bot.template_name}`)
             return res.status(apiCodes.FORBIDDEN).json(responses.COMMON.ACCESS_DENIED)
         }
 
         // Fetch bots panel
         const panel = ManagerBotPanel.getPanel(bot.panel_id)
         if (!panel || !panel?.socket?.connected) {
-            botLogger.error(`پنل ${bot.panel_id} برای بات ${botId} آفلاین یا پیدا نشد`)
+            botLogger.error(`پنل ${bot.panel_id} برای بات ${bot.template_name} آفلاین یا پیدا نشد`)
             return res.status(apiCodes.BAD_REQUEST).json(responses.PANEL.IS_OFFLINE)
         }
 
@@ -45,7 +45,7 @@ module.exports = async (req, res) => {
         }
         await bot.save()
 
-        botLogger.info(`بات توسط ${username} مجدداً متصل شد`)
+        botLogger.info(`بات ${bot.template_name} توسط ${username} مجدداً متصل شد`)
         return res.status(apiCodes.SUCCESS).json(responses.MANAGER_BOT.RECONNECT.SUCCESS)
     } catch (err) {
         console.error(err)

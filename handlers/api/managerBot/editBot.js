@@ -134,7 +134,7 @@ module.exports = async (req, res) => {
 
         await bot.save()
 
-        botLogger.info(`بات توسط ${username} ویرایش شد`)
+        botLogger.info(`بات ${bot.template_name} توسط ${username} ویرایش شد`)
         return res.status(apiCodes.SUCCESS).json(responses.MANAGER_BOT.EDITED)
     } catch (err) {
         console.error(err)

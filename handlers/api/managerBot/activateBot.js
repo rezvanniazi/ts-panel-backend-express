@@ -19,13 +19,13 @@ module.exports = async (req, res) => {
         }
 
         if (scope == "reseller" && bot.author !== username) {
-            botLogger.error(`دسترسی غیرمجاز برای ${username} به بات ${botId}`)
+            botLogger.error(`دسترسی غیرمجاز برای ${username} به بات ${bot.template_name}`)
             return res.status(apiCodes.FORBIDDEN).json(responses.COMMON.ACCESS_DENIED)
         }
 
         // Check if bot is expired
         if (bot.expires < new Date()) {
-            botLogger.error(`فعال کردن بات ${botId} با شکست مواجه شد (تمدید بات اتمام شده است)`)
+            botLogger.error(`فعال کردن بات ${bot.template_name} با شکست مواجه شد (تمدید بات اتمام شده است)`)
             return res.status(apiCodes.EXPIRED).json(responses.MANAGER_BOT.BOT_EXPIRED)
         }
         // Change bot state in db
@@ -42,7 +42,7 @@ module.exports = async (req, res) => {
         // Save changes in db
         await bot.save()
 
-        botLogger.info(`بات توسط ${username} فعال شد`)
+        botLogger.info(`بات ${bot.template_name} توسط ${username} فعال شد`)
         return res.status(apiCodes.SUCCESS).json(responses.MANAGER_BOT.ACTIVATED)
     } catch (err) {
         console.error(err)

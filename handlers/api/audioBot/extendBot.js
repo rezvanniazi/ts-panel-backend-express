@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
         }
 
         if (user.scope == "reseller" && user.username !== bot.bot_owner) {
-            userLogger.error(`دسترسی غیرمجاز برای ${user.username} به بات ${botId}`)
+            userLogger.error(`دسترسی غیرمجاز برای ${user.username} به بات ${bot.template_name}`)
             return res.status(apiCodes.FORBIDDEN).json(responses.COMMON.ACCESS_DENIED)
         }
 
@@ -51,7 +51,9 @@ module.exports = async (req, res) => {
                 await user.subtractBalance(package.package_amount, transaction)
             } catch (err) {
                 if (err.message == "Insufficient Balance") {
-                    userLogger.error(`موجودی ناکافی برای ${user.username} - مبلغ مورد نیاز: ${package.package_amount}`)
+                    userLogger.error(
+                        `موجودی ناکافی برای ${user.username} بابت تمدید بات ${bot.template_name} - مبلغ مورد نیاز: ${package.package_amount}`
+                    )
                     return res.status(apiCodes.INSUFFICIENT_BALANCE).json(responses.USER.INSUFFICIENT_BALANCE)
                 } else {
                     throw err
@@ -60,8 +62,10 @@ module.exports = async (req, res) => {
         }
         await transaction.commit()
 
-        botLogger.info(`بات توسط ${user.username} تمدید شد - ${package.package_days} روز`)
-        userLogger.info(`مقدار ${package.package_amount} از حساب ${user.username} کسر شد`)
+        botLogger.info(`بات ${bot.template_name} توسط ${user.username} تمدید شد - ${package.package_days} روز`)
+        userLogger.info(
+            `مقدار ${package.package_amount} از حساب ${user.username} بابت تمدید بات ${bot.template_name} کسر شد`
+        )
 
         return res.status(apiCodes.SUCCESS).json(responses.AUDIO_BOT.EXTENDED)
     } catch (err) {

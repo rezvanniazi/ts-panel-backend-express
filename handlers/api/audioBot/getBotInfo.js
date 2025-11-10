@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
         }
 
         if (scope == "reseller" && bot.bot_owner !== username) {
-            botLogger.error(`دسترسی غیرمجاز برای ${username} به بات ${botId}`)
+            botLogger.error(`دسترسی غیرمجاز برای ${username} به بات ${bot.template_name}`)
             return res.status(apiCodes.FORBIDDEN).json(responses.COMMON.ACCESS_DENIED)
         }
 
@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
             bot.volume = 0
         }
 
-        botLogger.info(`اطلاعات بات توسط ${username} درخواست شد`)
+        botLogger.info(`اطلاعات بات ${bot.template_name} توسط ${username} درخواست شد`)
         return res.status(apiCodes.SUCCESS).json(bot)
     } catch (err) {
         console.error("get bot info Error: ", err)

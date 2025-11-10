@@ -1,5 +1,4 @@
 const TsManagerBots = require("../../../models/TsManagerBots")
-const ManagerBotPanels = require("../../../models/ManagerBotPanels")
 const { ManagerBotPanel } = require("../../../lib/managerBot/ManagerBotPanel")
 const apiCodes = require("../../../constants/apiCodes")
 const responses = require("../../../constants/responses")
@@ -10,8 +9,6 @@ module.exports = async (req, res) => {
         const { username, scope, id } = req.user
         const { selecteds } = req.body
         const userLogger = createLogger("user", id)
-
-        const panelList = await ManagerBotPanels.findAll()
 
         let botList
         if (scope == "admin") {
@@ -35,6 +32,9 @@ module.exports = async (req, res) => {
 
                     if (panel && panel?.socket?.connected) {
                         await panel.reconnectBot({ templateName: b.template_name })
+                        const botLogger = createLogger("managerBot", b.id)
+                        botLogger.info(`بات ${b.template_name} توسط ${username} مجدداً متصل شد`)
+
                         b.status = "online"
                         await bot.save()
                     }
