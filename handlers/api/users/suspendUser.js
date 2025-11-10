@@ -16,6 +16,7 @@ module.exports = async (req, res) => {
             return res.status(apiCodes.BAD_REQUEST).json(responses.USER.NOT_FOUND)
         }
         user.status = "suspended"
+        await user.save()
 
         userLogger.info(`کاربر ${user.username} توسط ${req.user.username} معلق شد`)
         targetUserLogger.info(`حساب کاربری توسط ${req.user.username} معلق شد`)
