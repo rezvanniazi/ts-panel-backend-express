@@ -58,7 +58,14 @@ class ExpirationJobs {
                     return reject()
                 }
                 try {
-                    await author.subtractBalance(pkg.package_amount)
+                    await author.subtractBalance(pkg.package_amount).catch((err) => {
+                        const userLogger = createLogger("user", author.id)
+                        userLogger.error(
+                            `خطا در کسر موجودی برای تمدید سرور تیم اسپیک ${server.server_port}-${server.query_port}: ${err.message}`
+                        )
+
+                        reject()
+                    })
                 } catch (err) {
                     return reject()
                 }
@@ -108,7 +115,12 @@ class ExpirationJobs {
                     throw new Error("Package or author not found")
                 }
 
-                await author.subtractBalance(pkg.package_amount)
+                await author.subtractBalance(pkg.package_amount).catch((err) => {
+                    const userLogger = createLogger("user", author.id)
+                    userLogger.error(`خطا در کسر موجودی برای تمدید موزیک بات ${bot.template_name}: ${err.message}`)
+
+                    reject()
+                })
                 const expires = new Date()
                 expires.setDate(expires.getDate() + pkg.package_days)
 
@@ -163,7 +175,12 @@ class ExpirationJobs {
                     reject("Permissions or author not found")
                 }
                 const amount = calculatePermissions(permissions, bot.permissions)
-                await author.subtractBalance(amount)
+                await author.subtractBalance(amount).catch((err) => {
+                    const userLogger = createLogger("user", author.id)
+                    userLogger.error(`خطا در کسر موجودی برای تمدید منیجر بات ${bot.template_name}: ${err.message}`)
+
+                    reject()
+                })
 
                 const expires = new Date()
                 expires.setDate(expires.getDate() + 30)
@@ -217,7 +234,12 @@ class ExpirationJobs {
                     throw new Error("Settings or author not found")
                 }
 
-                await author.subtractBalance(settings.price)
+                await author.subtractBalance(settings.price).catch((err) => {
+                    const userLogger = createLogger("user", author.id)
+                    userLogger.error(`خطا در کسر موجودی برای تمدید رنک سیستم ${bot.template_name}: ${err.message}`)
+
+                    reject()
+                })
 
                 const expires = new Date()
                 expires.setDate(expires.getDate() + 30)
